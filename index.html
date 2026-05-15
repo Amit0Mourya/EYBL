@@ -8,7 +8,7 @@
 							`;a.documentElement.insertAdjacentHTML("afterbegin",p)}s.useXMLparser===!0?n[0]=[new XMLSerializer().serializeToString(a)]:n[0][0]=a.documentElement.outerHTML}}}return N(e,n)}let i=Object.getOwnPropertyNames(e);for(let n=0;n<i.length;n++){let l=i[n];if(l in t)continue;let m=Object.getOwnPropertyDescriptor(e,l);Object.defineProperty(t,l,m)}return t.prototype=e.prototype,t}(Blob);function E(e){if(typeof e=="object"&&typeof e.coords=="object"){const t=j(),i=r,n=f;d=e.coords.lat,g=e.coords.lon,r=e.fakeIt,f=!0,h={lat:d,lon:g},n&&(t||i!==r)&&G()}}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{E(e)})},500):typeof k<"u"&&document.addEventListener(k,function(e){try{const t=JSON.parse(e.detail);E(t)}catch{}})}
 								)();
 								</script>
-							<head></head><body><h2 class="sr-only">Live EYBL &amp; Puma Games Dashboard — May 15–17 2026, auto-refreshing from Google Sheets every 60 seconds.</h2>
+							<head></head><body><h2 class="sr-only">EYBL'O Meter — Live Games Dashboard, May 15–17 2026.</h2>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 .dash{padding:.75rem 0 1.5rem}
@@ -50,7 +50,7 @@
 
 <div class="dash">
 <div class="topbar">
-  <div class="topbar-title"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:16px;margin-right:6px;vertical-align:-2px"></i>EYBL &amp; Puma — Live game tracker</div>
+  <div class="topbar-title"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:16px;margin-right:6px;vertical-align:-2px"></i>EYBL'O Meter</div>
   <div class="topbar-meta">
     <span class="live-dot"></span>
     <span id="last-updated">Connecting...</span>
@@ -425,6 +425,5 @@ async function fetchAll(){
 }
 
 fetchAll();
-setInterval(fetchAll, 60000);
 </script>
 </body></html>
