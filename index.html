@@ -326,18 +326,20 @@ async function fetchAll(){
       getSheetNames(PUMA_ID)
     ]);
 
-    // Only fetch the exact 5 event tabs — 3 from Nike, 2 from Puma
-    const NIKE_TABS = ['EYBL Boys | Memphis May 15-17', 'EYBL Girls | New Orleans May 15-17', 'EYCL Girls | New Orleans May 15-17'];
-    const PUMA_TABS = { 'May 15-17 Girls Omaha': 'Puma Girls | May 15-17', 'May15-17 Girls Omaha': 'Puma Girls | May 15-17', 'May 15-17 Boys Tulsa': 'Puma Boys | May 15-17', 'May15-17 Boys Tulsa': 'Puma Boys | May 15-17' };
-
-    const nikeTabs = nikeNames.filter(n => NIKE_TABS.some(t => n.trim().toLowerCase() === t.toLowerCase()));
-    const pumaTabs = pumaNames.filter(n => Object.keys(PUMA_TABS).some(t => n.trim().toLowerCase() === t.toLowerCase()));
+    const nikeTabs = nikeNames.filter(isRelevantTab);
+    // Puma sheet has two tab types:
+    // 1. "Puma Girls | May 15-17" / "Puma Boys | May 15-17" — summary/duplicate tabs, SKIP these
+    // 2. The real data tabs (e.g. "May15-17 Girls Omaha") — KEEP these, label them as "Puma Girls | May 15-17" etc.
+    const pumaTabs = pumaNames.filter(isRelevantTab).filter(n => !n.toLowerCase().includes('puma'));
 
     const allFetches = [
       ...nikeTabs.map(name => fetchSheetValues(NIKE_ID, name).then(rows => parseRows(rows, name.trim())).catch(()=>[])),
       ...pumaTabs.map(name => {
-        const label = Object.keys(PUMA_TABS).find(t => name.trim().toLowerCase() === t.toLowerCase());
-        return fetchSheetValues(PUMA_ID, name).then(rows => parseRows(rows, PUMA_TABS[label])).catch(()=>[]);
+        const n = name.trim().toLowerCase();
+        const label = n.includes('girl') ? 'Puma Girls | May 15-17'
+                    : n.includes('boy')  ? 'Puma Boys | May 15-17'
+                    : name.trim();
+        return fetchSheetValues(PUMA_ID, name).then(rows => parseRows(rows, label)).catch(()=>[]);
       }),
     ];
 
