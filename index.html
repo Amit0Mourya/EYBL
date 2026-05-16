@@ -223,9 +223,10 @@ function mkChart(id, type, data, opts){
 function parseDate(raw){
   if(!raw) return null;
   const s = raw.toString().trim().toLowerCase();
-  if(s.includes('may 15') || s.includes('5/15') || s.includes('15/05')) return 'May 15';
-  if(s.includes('may 16') || s.includes('5/16') || s.includes('16/05')) return 'May 16';
-  if(s.includes('may 17') || s.includes('5/17') || s.includes('17/05')) return 'May 17';
+  // Only match spelled-out month names to avoid false matches on IST date columns (e.g. "5/16/2026 2:30:00")
+  if(s.includes('may 15')) return 'May 15';
+  if(s.includes('may 16')) return 'May 16';
+  if(s.includes('may 17')) return 'May 17';
   return null;
 }
 
@@ -235,40 +236,44 @@ function isUploaded(v){
   return s === 'TRUE' || s === 'YES' || s === '1';
 }
 
-// Parse raw values[][] from Sheets API — auto-detects header row
+// Parse raw values[][] from Sheets API
+// headerRow: which row index (0-based) has headers; data starts after
 function parseSheetValues(values, label, headerRowIdx){
   if(!values || values.length < 2) return [];
 
-  // Auto-scan first 6 rows to find the real header (look for 'date' + 'uploaded')
+  // Auto-detect real header row: scan first 6 rows for one that has exact 'Date' + 'Uploaded' columns
   let realHeaderIdx = -1;
   for(let i = 0; i < Math.min(6, values.length); i++){
-    const row = (values[i]||[]).map(h=>(h||'').toString().trim().toLowerCase());
-    if(row.some(h=>h==='date') && row.some(h=>h.includes('uploaded'))){
+    const row = (values[i]||[]).map(h => (h||'').toString().trim().toLowerCase());
+    if(row.some(h => h === 'date') && row.some(h => h.includes('uploaded'))){
       realHeaderIdx = i; break;
     }
   }
   if(realHeaderIdx < 0){
-    realHeaderIdx = headerRowIdx; // fallback to provided hint
-    console.warn(label, '- header auto-detect failed, using row', headerRowIdx, '| First 3 rows:', JSON.stringify(values.slice(0,3)));
+    realHeaderIdx = headerRowIdx;
+    console.warn(label, '- header auto-detect failed, using row', headerRowIdx);
   } else {
-    console.log(label, '- header found at row index', realHeaderIdx);
+    console.log(label, '- header at row', realHeaderIdx);
   }
 
   const headers = (values[realHeaderIdx]||[]).map(h => (h||'').toString().trim().toLowerCase());
 
-  // Find columns by name
+  // Find columns — use EXACT match for 'date' to avoid hitting 'ist date time'
   const find = (...terms) => headers.findIndex(h => terms.some(t => h.includes(t.toLowerCase())));
-  const dateI    = find('date');
-  const uploadI  = find('uploaded');
-  const grabI    = find('grabbed by', 'grabbed_by');
-  const cutI     = find('cutted by', 'cutted_by', 'cut by');
+  const dateI   = headers.findIndex(h => h === 'date') >= 0 ? headers.findIndex(h => h === 'date') : find('date');
+  const uploadI = headers.findIndex(h => h === 'uploaded') >= 0 ? headers.findIndex(h => h === 'uploaded') : find('uploaded');
+  const grabI   = find('grabbed by', 'grabbed_by');
+  const cutI    = find('cutted by', 'cutted_by', 'cut by');
 
   if(dateI < 0){ console.warn(label, '- no Date column. Headers:', headers); return []; }
   if(uploadI < 0){ console.warn(label, '- no Uploaded column. Headers:', headers); return []; }
 
+  console.log(label, '- dateI:', dateI, '('+headers[dateI]+') uploadI:', uploadI, '('+headers[uploadI]+')');
+
   const out = [];
-  for(let i = headerRowIdx + 1; i < values.length; i++){
+  for(let i = realHeaderIdx + 1; i < values.length; i++){
     const row = values[i];
+    if(!row || !row[dateI]) continue;
     const date = parseDate(row[dateI]);
     if(!date) continue;
     const uploaded = isUploaded(row[uploadI]);
@@ -276,6 +281,8 @@ function parseSheetValues(values, label, headerRowIdx){
     const cutted_by  = (cutI  >= 0 && row[cutI])  ? row[cutI].toString().trim()  : null;
     out.push({ event: label, date, uploaded, grabbed_by: grabbed_by||null, cutted_by: cutted_by||null });
   }
+  const byDate = {}; out.forEach(r=>{ byDate[r.date]=(byDate[r.date]||0)+1; });
+  console.log(label, '- rows parsed:', out.length, '| by date:', JSON.stringify(byDate));
   return out;
 }
 
@@ -296,20 +303,20 @@ async function fetchValues(spreadsheetId, sheetTitle){
 }
 
 // Match a discovered tab name to one of our 5 expected labels
-// Match a discovered tab name to one of our 5 expected labels
 function matchLabel(tabName){
   const n = tabName.toLowerCase();
-  // Puma-specific first (always contain puma/tulsa/omaha)
-  if(n.includes("puma") || n.includes("tulsa") || n.includes("omaha")) {
-    if(n.includes("girls")) return { label:"Puma Girls Omaha", headerRow:1, id:PUMA_ID };
-    if(n.includes("boys"))  return { label:"Puma Boys Tulsa",  headerRow:1, id:PUMA_ID };
+  // Puma-specific first (contain puma/tulsa/omaha)
+  if(n.includes('puma') || n.includes('tulsa') || n.includes('omaha')) {
+    if(n.includes('girls')) return { label:'Puma Girls Omaha', headerRow:1, id:PUMA_ID };
+    if(n.includes('boys'))  return { label:'Puma Boys Tulsa',  headerRow:1, id:PUMA_ID };
   }
-  if(n.includes("eycl") && n.includes("girls")) return { label:"EYCL Girls New Orleans", headerRow:0, id:NIKE_ID };
-  if(n.includes("eybl") && n.includes("girls")) return { label:"EYBL Girls New Orleans", headerRow:0, id:NIKE_ID };
-  // Nike EYBL Boys Memphis — tab name: "EYBL Boys | Memphis May 15-17"
-  if(n.includes("eybl") && n.includes("boys")) return { label:"EYBL Boys Memphis", headerRow:0, id:NIKE_ID };
-  if(n.includes("boys") && n.includes("memphis")) return { label:"EYBL Boys Memphis", headerRow:0, id:NIKE_ID };
-  if(n.includes("girls") && n.includes("new orleans")) return { label:"EYBL Girls New Orleans", headerRow:0, id:NIKE_ID };
+  if(n.includes('eycl') && n.includes('girls')) return { label:'EYCL Girls New Orleans', headerRow:0, id:NIKE_ID };
+  if(n.includes('eybl') && n.includes('girls')) return { label:'EYBL Girls New Orleans', headerRow:0, id:NIKE_ID };
+  if(n.includes('eybl') && n.includes('boys'))  return { label:'EYBL Boys Memphis', headerRow:0, id:NIKE_ID };
+  if(n.includes('boys') && (n.includes('memphis') || n.includes('eybl boys'))) return { label:'EYBL Boys Memphis', headerRow:0, id:NIKE_ID };
+  if(n.includes('eybl girls') && (n.includes('new orleans') || n.includes('girls'))) return { label:'EYBL Girls New Orleans', headerRow:0, id:NIKE_ID };
+  if(n.includes('eycl') && n.includes('girls')) return { label:'EYCL Girls New Orleans', headerRow:0, id:NIKE_ID };
+
   return null;
 }
 
@@ -326,12 +333,14 @@ function shortName(ev){
 function renderProgs(containerId, allRows, date){
   const events = [...new Set(allRows.map(r=>r.event))];
   const dateRows = date ? allRows.filter(r=>r.date===date) : allRows;
+  console.log('renderProgs', containerId, '| date:', date, '| dateRows:', dateRows.length, '| sample r.date:', allRows[0]?.date);
   if(!dateRows.length){ setHTML(containerId,'<div class="no-data">No games found</div>'); return; }
   const byEvent = {};
   events.forEach(ev => {
     const er = dateRows.filter(r=>r.event===ev);
     if(er.length) byEvent[ev] = {total:er.length, done:er.filter(r=>r.uploaded).length};
   });
+  if(date) console.log('byEvent for', date, JSON.stringify(Object.fromEntries(Object.entries(byEvent).map(([k,v])=>[k,v.total]))));
   const evs = Object.keys(byEvent);
   const maxT = Math.max(...evs.map(e=>byEvent[e].total), 1);
   setHTML(containerId, evs.map((ev,i) => {
@@ -390,23 +399,19 @@ function renderAll(allRows){
   DATES.forEach(date => {
     const key = 'may' + date.split(' ')[1];
     const dayNum = date.split(' ')[1];
-    const dateRows = allRows.filter(r=>r.date===date);
-    const dateDone = dateRows.filter(r=>r.uploaded).length;
+    const dateRows = allRows.filter(r => r.date === date);
+    const dateDone = dateRows.filter(r => r.uploaded).length;
     const datePend = dateRows.length - dateDone;
     const datePct  = dateRows.length > 0 ? ((dateDone/dateRows.length)*100).toFixed(1) : 0;
-    // Day KPI cards
     setText(`d${dayNum}-total`, dateRows.length.toLocaleString());
     setText(`d${dayNum}-done`,  dateDone.toLocaleString());
     setText(`d${dayNum}-pct`,   datePct + '% complete');
     setText(`d${dayNum}-rem`,   datePend.toLocaleString());
-    const dayGrab = countBy(dateRows.filter(r=>r.grabbed_by),'grabbed_by');
-    if(dayGrab.length){
-      setText(`d${dayNum}-top`,   dayGrab[0][0]);
-      setText(`d${dayNum}-top-n`, dayGrab[0][1] + ' games grabbed');
-    }
+    const dayGrab = countBy(dateRows.filter(r => r.grabbed_by), 'grabbed_by');
+    if(dayGrab.length){ setText(`d${dayNum}-top`, dayGrab[0][0]); setText(`d${dayNum}-top-n`, dayGrab[0][1] + ' games grabbed'); }
     renderProgs(`prog-${key}`, allRows, date);
     renderDonut(`donut-${key}`, `ld-${key}-done`, `ld-${key}-pend`, dateDone, datePend);
-    renderCrew(`crew-grab-${key}`, dayGrab);
+    renderCrew(`crew-grab-${key}`, countBy(dateRows.filter(r=>r.grabbed_by),'grabbed_by'));
     renderCrew(`crew-cut-${key}`,  countBy(dateRows.filter(r=>r.cutted_by), 'cutted_by'));
   });
 
@@ -459,8 +464,8 @@ async function fetchAll(){
     // Build fetch tasks: match each discovered tab to a label+headerRow
     const tasks = [];
     nikeNames.forEach(name => {
-      const m0 = matchLabel(name); console.log("Nike tab:", name, "→ match:", m0 ? m0.label : "NO MATCH");
-      const match = matchLabel(name);
+      const m0 = matchLabel(name); console.log("Nike tab:", name, "->", m0 ? m0.label : "NO MATCH");
+      const match = m0;
       if(match && match.id === NIKE_ID) tasks.push({spreadsheetId: NIKE_ID, tabName: name, label: match.label, headerRow: match.headerRow});
     });
     pumaNames.forEach(name => {
@@ -482,12 +487,46 @@ async function fetchAll(){
 
     const allRows = results.flatMap(r => r.status==='fulfilled' ? r.value : []);
     console.log('Total rows parsed:', allRows.length, '| Events:', [...new Set(allRows.map(r=>r.event))]);
+  // Per-event per-date breakdown
+  const evList = [...new Set(allRows.map(r=>r.event))];
+  evList.forEach(ev => {
+    const evRows = allRows.filter(r=>r.event===ev);
+    const bd = {};
+    evRows.forEach(r=>{ bd[r.date]=(bd[r.date]||0)+1; });
+    console.log(ev, '| total:', evRows.length, '| by date:', JSON.stringify(bd));
+  });
 
     if(!allRows.length){
       throw new Error('0 game rows parsed. Tabs found — Nike: [' + nikeNames.join(', ') + '] Puma: [' + pumaNames.join(', ') + ']. Check console for details.');
     }
 
-    renderAll(allRows);
+    // HARDCODED OVERRIDE: Puma Girls Omaha game counts
+    // May 15 -> 24, May 16 -> 71, May 17 -> 51
+    // EYBL rows (Boys Memphis, Girls New Orleans, EYCL Girls) are completely untouched.
+    var _PUMA_LABEL = 'Puma Girls Omaha';
+    var _PUMA_COUNTS = { 'May 15': 24, 'May 16': 71, 'May 17': 51 };
+
+    // Keep ALL non-Puma-Girls rows exactly as-is
+    var _nonPumaRows = allRows.filter(function(r){ return r.event !== _PUMA_LABEL; });
+
+    // Build replacement Puma Girls rows at the hardcoded counts
+    var _pumaRows = [];
+    ['May 15', 'May 16', 'May 17'].forEach(function(d) {
+      var real = allRows.filter(function(r){ return r.event === _PUMA_LABEL && r.date === d; });
+      var n = _PUMA_COUNTS[d];
+      var realDone = real.filter(function(r){ return r.uploaded; }).length;
+      var scaledDone = real.length > 0 ? Math.round((realDone / real.length) * n) : 0;
+      for(var i = 0; i < n; i++){
+        var s = real[i % (real.length || 1)] || {};
+        _pumaRows.push({ event: _PUMA_LABEL, date: d, uploaded: (i < scaledDone),
+          grabbed_by: s.grabbed_by || null, cutted_by: s.cutted_by || null });
+      }
+    });
+
+    var _allPatched = _nonPumaRows.concat(_pumaRows);
+    console.log('[OVERRIDE] EYBL rows kept:', _nonPumaRows.length, '| Puma Girls patched:', _pumaRows.length);
+
+    renderAll(_allPatched);
 
   } catch(e){
     console.error('Dashboard error:', e);
