@@ -446,87 +446,129 @@ function renderAll(allRows){
   setText('last-updated', 'Updated ' + new Date().toLocaleTimeString());
 }
 
+// ── Puma CSV (published Google Sheet) ────────────────────────────────────────
+const PUMA_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRKtj-E1vWISauDR37xk9MjnuVeg9HCTzdQma2X8VvEkkdarD9fZfIy0--HxUzWGQNeQQgnpat_zGi/pub';
+const PUMA_BOYS_CSV  = PUMA_BASE + '?gid=1158782297&single=true&output=csv';
+const PUMA_GIRLS_CSV = PUMA_BASE + '?gid=1688250325&single=true&output=csv';
+const CSV_PROXIES = [
+  u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+];
+
+async function fetchCSVWithProxy(url){
+  for(const proxy of CSV_PROXIES){
+    try{
+      const res = await fetch(proxy(url), { signal: AbortSignal.timeout(8000) });
+      if(!res.ok) continue;
+      const text = await res.text();
+      if(text && text.length > 100) return text;
+    } catch(e){ console.warn('CSV proxy failed:', e.message); }
+  }
+  throw new Error('All CSV proxies failed — check sheet is published publicly');
+}
+
+function splitCSVLine(line){
+  const cols=[]; let cur='', inQ=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(ch==='"'){ inQ=!inQ; }
+    else if(ch===','&&!inQ){ cols.push(cur.trim()); cur=''; }
+    else cur+=ch;
+  }
+  cols.push(cur.trim());
+  return cols;
+}
+
+function parsePumaCSV(text, eventLabel){
+  const lines = text.trim().split('\n');
+  const rows = [];
+  let headerIdx = -1;
+  let dateI=-1, uploadI=-1, grabI=-1, cutI=-1;
+
+  // Find header row (has both 'date' and 'uploaded')
+  for(let i=0;i<Math.min(8,lines.length);i++){
+    const cols = splitCSVLine(lines[i]).map(h=>h.toLowerCase().replace(/"/g,'').trim());
+    if(cols.some(h=>h==='date') && cols.some(h=>h==='uploaded')){
+      headerIdx=i;
+      dateI   = cols.findIndex(h=>h==='date');
+      uploadI = cols.findIndex(h=>h==='uploaded');
+      grabI   = cols.findIndex(h=>h.includes('grabbed by')||h.includes('grabbed_by'));
+      cutI    = cols.findIndex(h=>h.includes('cutted by')||h.includes('cutted_by')||h.includes('cut by'));
+      console.log(eventLabel, 'CSV header at row', i, '| dateI:', dateI, 'uploadI:', uploadI, 'grabI:', grabI, 'cutI:', cutI);
+      break;
+    }
+  }
+  if(headerIdx<0){ console.warn(eventLabel, 'CSV: header row not found'); return []; }
+
+  for(let i=headerIdx+1;i<lines.length;i++){
+    const cols = splitCSVLine(lines[i]);
+    if(!cols[dateI]) continue;
+    const rawDate = cols[dateI].replace(/"/g,'').trim();
+    const date = parseDate(rawDate);
+    if(!date) continue;
+    const uploaded = isUploaded(cols[uploadI]||'');
+    const grabbed_by = (grabI>=0 && cols[grabI]) ? cols[grabI].replace(/"/g,'').trim() || null : null;
+    const cutted_by  = (cutI>=0  && cols[cutI])  ? cols[cutI].replace(/"/g,'').trim()  || null : null;
+    rows.push({ event: eventLabel, date, uploaded, grabbed_by, cutted_by });
+  }
+  const byDate={}; rows.forEach(r=>{ byDate[r.date]=(byDate[r.date]||0)+1; });
+  console.log(eventLabel, 'CSV parsed:', rows.length, 'rows | by date:', JSON.stringify(byDate));
+  return rows;
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 async function fetchAll(){
   const upEl = $('last-updated');
   if(upEl) upEl.innerHTML = '<span class="spinner"></span>Fetching...';
   setHTML('err-area','');
 
   try {
-    // Discover actual tab names from both spreadsheets
-    const [nikeNames, pumaNames] = await Promise.all([
+    // Fetch Nike (Sheets API) + Puma Boys & Girls CSV in parallel
+    const [nikeNames, pumaBoysText, pumaGirlsText] = await Promise.all([
       getSheetNames(NIKE_ID),
-      getSheetNames(PUMA_ID),
+      fetchCSVWithProxy(PUMA_BOYS_CSV),
+      fetchCSVWithProxy(PUMA_GIRLS_CSV),
     ]);
 
     console.log('Nike tabs:', nikeNames);
-    console.log('Puma tabs:', pumaNames);
 
-    // Build fetch tasks: match each discovered tab to a label+headerRow
+    // Build Nike fetch tasks
     const tasks = [];
     nikeNames.forEach(name => {
-      const m0 = matchLabel(name); console.log("Nike tab:", name, "->", m0 ? m0.label : "NO MATCH");
-      const match = m0;
+      const match = matchLabel(name);
+      console.log('Nike tab:', name, '->', match ? match.label : 'NO MATCH');
       if(match && match.id === NIKE_ID) tasks.push({spreadsheetId: NIKE_ID, tabName: name, label: match.label, headerRow: match.headerRow});
     });
-    pumaNames.forEach(name => {
-      const match = matchLabel(name);
-      if(match && match.id === PUMA_ID) tasks.push({spreadsheetId: PUMA_ID, tabName: name, label: match.label, headerRow: match.headerRow});
-    });
 
-    console.log('Matched tasks:', tasks.map(t=>t.label + ' → ' + t.tabName));
-
-    if(!tasks.length) throw new Error('No matching sheet tabs found. Tabs found — Nike: [' + nikeNames.join(', ') + '] Puma: [' + pumaNames.join(', ') + ']');
-
-    // Fetch all matched sheets
+    // Fetch all Nike sheets
     const results = await Promise.allSettled(
       tasks.map(t => fetchValues(t.spreadsheetId, t.tabName).then(values => parseSheetValues(values, t.label, t.headerRow)))
     );
 
     const errors = results.filter(r=>r.status==='rejected').map(r=>r.reason?.message||'Unknown error');
-    if(errors.length) console.warn('Some sheets failed:', errors);
+    if(errors.length) console.warn('Some Nike sheets failed:', errors);
 
-    const allRows = results.flatMap(r => r.status==='fulfilled' ? r.value : []);
-    console.log('Total rows parsed:', allRows.length, '| Events:', [...new Set(allRows.map(r=>r.event))]);
-  // Per-event per-date breakdown
-  const evList = [...new Set(allRows.map(r=>r.event))];
-  evList.forEach(ev => {
-    const evRows = allRows.filter(r=>r.event===ev);
-    const bd = {};
-    evRows.forEach(r=>{ bd[r.date]=(bd[r.date]||0)+1; });
-    console.log(ev, '| total:', evRows.length, '| by date:', JSON.stringify(bd));
-  });
+    const nikeRows = results.flatMap(r => r.status==='fulfilled' ? r.value : []);
 
-    if(!allRows.length){
-      throw new Error('0 game rows parsed. Tabs found — Nike: [' + nikeNames.join(', ') + '] Puma: [' + pumaNames.join(', ') + ']. Check console for details.');
-    }
+    // Parse Puma Boys & Girls from CSV
+    const pumaBoysRows  = parsePumaCSV(pumaBoysText,  'Puma Boys Tulsa');
+    const pumaGirlsRows = parsePumaCSV(pumaGirlsText, 'Puma Girls Omaha');
 
-    // HARDCODED OVERRIDE: Puma Girls Omaha game counts
-    // May 15 -> 24, May 16 -> 71, May 17 -> 51
-    // EYBL rows (Boys Memphis, Girls New Orleans, EYCL Girls) are completely untouched.
-    var _PUMA_LABEL = 'Puma Girls Omaha';
-    var _PUMA_COUNTS = { 'May 15': 24, 'May 16': 71, 'May 17': 51 };
+    const allRows = [...nikeRows, ...pumaBoysRows, ...pumaGirlsRows];
+    console.log('Total rows:', allRows.length, '| Events:', [...new Set(allRows.map(r=>r.event))]);
 
-    // Keep ALL non-Puma-Girls rows exactly as-is
-    var _nonPumaRows = allRows.filter(function(r){ return r.event !== _PUMA_LABEL; });
-
-    // Build replacement Puma Girls rows at the hardcoded counts
-    var _pumaRows = [];
-    ['May 15', 'May 16', 'May 17'].forEach(function(d) {
-      var real = allRows.filter(function(r){ return r.event === _PUMA_LABEL && r.date === d; });
-      var n = _PUMA_COUNTS[d];
-      var realDone = real.filter(function(r){ return r.uploaded; }).length;
-      var scaledDone = real.length > 0 ? Math.round((realDone / real.length) * n) : 0;
-      for(var i = 0; i < n; i++){
-        var s = real[i % (real.length || 1)] || {};
-        _pumaRows.push({ event: _PUMA_LABEL, date: d, uploaded: (i < scaledDone),
-          grabbed_by: s.grabbed_by || null, cutted_by: s.cutted_by || null });
-      }
+    // Per-event per-date breakdown
+    [...new Set(allRows.map(r=>r.event))].forEach(ev => {
+      const evRows = allRows.filter(r=>r.event===ev);
+      const bd={};
+      evRows.forEach(r=>{ bd[r.date]=(bd[r.date]||0)+1; });
+      console.log(ev, '| total:', evRows.length, '| by date:', JSON.stringify(bd));
     });
 
-    var _allPatched = _nonPumaRows.concat(_pumaRows);
-    console.log('[OVERRIDE] EYBL rows kept:', _nonPumaRows.length, '| Puma Girls patched:', _pumaRows.length);
+    if(!allRows.length) throw new Error('0 game rows parsed. Check console for details.');
 
-    renderAll(_allPatched);
+    renderAll(allRows);
 
   } catch(e){
     console.error('Dashboard error:', e);
