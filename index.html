@@ -8,63 +8,63 @@
 							`;a.documentElement.insertAdjacentHTML("afterbegin",p)}s.useXMLparser===!0?n[0]=[new XMLSerializer().serializeToString(a)]:n[0][0]=a.documentElement.outerHTML}}}return N(e,n)}let i=Object.getOwnPropertyNames(e);for(let n=0;n<i.length;n++){let l=i[n];if(l in t)continue;let m=Object.getOwnPropertyDescriptor(e,l);Object.defineProperty(t,l,m)}return t.prototype=e.prototype,t}(Blob);function E(e){if(typeof e=="object"&&typeof e.coords=="object"){const t=j(),i=r,n=f;d=e.coords.lat,g=e.coords.lon,r=e.fakeIt,f=!0,h={lat:d,lon:g},n&&(t||i!==r)&&G()}}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{E(e)})},500):typeof k<"u"&&document.addEventListener(k,function(e){try{const t=JSON.parse(e.detail);E(t)}catch{}})}
 								)();
 								</script>
-							<head></head><body><h2 class="sr-only">EYBL'O Meter — Live Games Dashboard, May 15–17 2026.</h2>
-<style>
+							<head><style>
 *{box-sizing:border-box;margin:0;padding:0}
 .dash{padding:.75rem 0 1.5rem}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.topbar-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.topbar-title{font-size:15px;font-weight:600;color:var(--color-text-primary)}
 .topbar-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--color-text-secondary)}
 .live-dot{width:7px;height:7px;border-radius:50%;background:#639922;display:inline-block;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
 .kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem}
 .kpi-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
-.kpi-val{font-size:21px;font-weight:500;color:var(--color-text-primary)}
+.kpi-val{font-size:22px;font-weight:600;color:var(--color-text-primary)}
 .kpi-sub{font-size:10px;color:var(--color-text-tertiary);margin-top:2px}
 .tabs{display:flex;gap:0;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:1rem}
-.tab{padding:.45rem 1.1rem;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--color-text-secondary);background:none;border-top:none;border-left:none;border-right:none;transition:color .15s}
+.tab{padding:.45rem 1.1rem;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--color-text-secondary);background:none;border-top:none;border-left:none;border-right:none}
 .tab.active{color:var(--color-text-primary);border-bottom-color:#378ADD}
 .tab-panel{display:none}.tab-panel.active{display:block}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:.875rem}
 .card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.875rem 1rem}
-.sec-title{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem}
-.prog-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
-.prog-label{width:145px;font-size:11px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sec-title{font-size:11px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.65rem}
+.prog-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.prog-label{width:140px;font-size:11px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .prog-bar-bg{flex:1;height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
 .prog-bar{height:100%;border-radius:3px}
-.prog-num{width:30px;text-align:right;font-size:11px;color:var(--color-text-primary)}
+.prog-num{width:30px;text-align:right;font-size:11px;color:var(--color-text-primary);font-weight:500}
+.prog-sub{font-size:9px;color:var(--color-text-tertiary);margin:0 0 6px 146px}
 .person-row{display:flex;align-items:center;gap:7px;margin-bottom:6px}
-.avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;flex-shrink:0}
-.person-name{font-size:12px;font-weight:500;color:var(--color-text-primary);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.person-count{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.avatar{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0}
+.person-name{font-size:12px;font-weight:500;color:var(--color-text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.person-count{font-size:12px;font-weight:600;color:var(--color-text-primary)}
 .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--color-text-secondary);margin-top:6px}
 .leg-dot{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:3px;vertical-align:middle}
-.err-box{background:var(--color-background-danger);border:.5px solid var(--color-border-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:12px;color:var(--color-text-danger);margin-bottom:1rem;white-space:pre-wrap;word-break:break-all}
+.err-box{background:#fff0f0;border:1px solid #ffc0c0;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#900;margin-bottom:1rem;word-break:break-word}
 .spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--color-border-tertiary);border-top-color:#378ADD;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.refresh-btn{font-size:11px;cursor:pointer;padding:3px 10px;border-radius:var(--border-radius-md)}
-.chart-wrap{position:relative;width:100%}
-.no-data{font-size:11px;color:var(--color-text-tertiary);padding:.5rem 0}
+.refresh-btn{font-size:11px;cursor:pointer;padding:3px 10px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);color:var(--color-text-secondary)}
+.no-data{font-size:11px;color:var(--color-text-tertiary);padding:.4rem 0}
+.ev-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;font-weight:500}
 </style>
 
-<div class="dash">
+</head><body><div class="dash">
 <div class="topbar">
-  <div class="topbar-title"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:16px;margin-right:6px;vertical-align:-2px"></i>EYBL'O Meter</div>
+  <div class="topbar-title">EYBL &amp; Puma — Live Game Tracker</div>
   <div class="topbar-meta">
     <span class="live-dot"></span>
     <span id="last-updated">Connecting...</span>
-    <button class="refresh-btn" onclick="fetchAll()"><i class="ti ti-refresh" aria-hidden="true"></i> Refresh</button>
+    <button class="refresh-btn" onclick="fetchAll()">↻ Refresh</button>
   </div>
 </div>
 
 <div id="err-area"></div>
 
 <div class="kpi-grid">
-  <div class="kpi"><div class="kpi-label"><i class="ti ti-calendar" aria-hidden="true"></i> Total games</div><div class="kpi-val" id="k-total">—</div><div class="kpi-sub">All events</div></div>
-  <div class="kpi"><div class="kpi-label"><i class="ti ti-check" aria-hidden="true"></i> Uploaded</div><div class="kpi-val" id="k-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="k-pct">—% complete</div></div>
-  <div class="kpi"><div class="kpi-label"><i class="ti ti-clock" aria-hidden="true"></i> Remaining</div><div class="kpi-val" id="k-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
-  <div class="kpi"><div class="kpi-label"><i class="ti ti-trophy" aria-hidden="true"></i> Top grabber</div><div class="kpi-val" id="k-top" style="font-size:13px;padding-top:5px">—</div><div class="kpi-sub" id="k-top-n">— grabbed</div></div>
+  <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="k-total">—</div><div class="kpi-sub">All 5 events · 3 days</div></div>
+  <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="k-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="k-pct">—% complete</div></div>
+  <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="k-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
+  <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="k-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="k-top-n">— games</div></div>
 </div>
 
 <div class="tabs">
@@ -74,97 +74,101 @@
   <button class="tab" onclick="showTab('overview',this)">Overview</button>
 </div>
 
+<!-- MAY 15 -->
 <div id="may15" class="tab-panel active">
-  <div style="display:flex;gap:12px;margin-bottom:.875rem;flex-wrap:wrap">
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Total games</div><div class="kpi-val" id="day-total-may15">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Uploaded</div><div class="kpi-val" style="color:#3B6D11" id="day-done-may15">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Pending</div><div class="kpi-val" style="color:#993C1D" id="day-pend-may15">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Complete</div><div class="kpi-val" id="day-pct-may15">—</div></div>
+  <div class="kpi-grid" style="margin-bottom:.75rem">
+    <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="d15-total">—</div><div class="kpi-sub">May 15 · All events</div></div>
+    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d15-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="d15-pct">—% complete</div></div>
+    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d15-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
+    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d15-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="d15-top-n">— games</div></div>
   </div>
   <div class="row2">
-    <div class="card"><div class="sec-title">Games by event</div><div id="prog-may15"></div></div>
+    <div class="card"><div class="sec-title">Games by Event</div><div id="prog-may15"><div class="no-data">Loading...</div></div></div>
     <div class="card">
-      <div class="sec-title">Upload progress</div>
-      <div class="chart-wrap" style="height:155px"><canvas id="donut-may15" role="img" aria-label="Upload donut May 15">—</canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may15-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#B4B2A9"></span><span id="ld-may15-pend">—</span> pending</span></div>
+      <div class="sec-title">Upload Progress</div>
+      <div style="position:relative;height:155px"><canvas id="donut-may15"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may15-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span><span id="ld-may15-pend">—</span> pending</span></div>
     </div>
   </div>
   <div class="card">
-    <div class="sec-title">Top crew — May 15</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Grabbed by</div><div id="crew-grab-may15"></div></div>
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Cut by</div><div id="crew-cut-may15"></div></div>
+    <div class="sec-title">Top Crew — May 15</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div><div id="crew-grab-may15"><div class="no-data">No data yet</div></div></div>
+      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">CUT BY</div><div id="crew-cut-may15"><div class="no-data">No data yet</div></div></div>
     </div>
   </div>
 </div>
 
-<div id="may16" class="tab-panel ">
-  <div style="display:flex;gap:12px;margin-bottom:.875rem;flex-wrap:wrap">
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Total games</div><div class="kpi-val" id="day-total-may16">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Uploaded</div><div class="kpi-val" style="color:#3B6D11" id="day-done-may16">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Pending</div><div class="kpi-val" style="color:#993C1D" id="day-pend-may16">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Complete</div><div class="kpi-val" id="day-pct-may16">—</div></div>
+<!-- MAY 16 -->
+<div id="may16" class="tab-panel">
+  <div class="kpi-grid" style="margin-bottom:.75rem">
+    <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="d16-total">—</div><div class="kpi-sub">May 16 · All events</div></div>
+    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d16-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="d16-pct">—% complete</div></div>
+    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d16-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
+    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d16-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="d16-top-n">— games</div></div>
   </div>
   <div class="row2">
-    <div class="card"><div class="sec-title">Games by event</div><div id="prog-may16"></div></div>
+    <div class="card"><div class="sec-title">Games by Event</div><div id="prog-may16"><div class="no-data">Loading...</div></div></div>
     <div class="card">
-      <div class="sec-title">Upload progress</div>
-      <div class="chart-wrap" style="height:155px"><canvas id="donut-may16" role="img" aria-label="Upload donut May 16">—</canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may16-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#B4B2A9"></span><span id="ld-may16-pend">—</span> pending</span></div>
+      <div class="sec-title">Upload Progress</div>
+      <div style="position:relative;height:155px"><canvas id="donut-may16"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may16-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span><span id="ld-may16-pend">—</span> pending</span></div>
     </div>
   </div>
   <div class="card">
-    <div class="sec-title">Top crew — May 16</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Grabbed by</div><div id="crew-grab-may16"></div></div>
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Cut by</div><div id="crew-cut-may16"></div></div>
+    <div class="sec-title">Top Crew — May 16</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div><div id="crew-grab-may16"><div class="no-data">No data yet</div></div></div>
+      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">CUT BY</div><div id="crew-cut-may16"><div class="no-data">No data yet</div></div></div>
     </div>
   </div>
 </div>
 
-<div id="may17" class="tab-panel ">
-  <div style="display:flex;gap:12px;margin-bottom:.875rem;flex-wrap:wrap">
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Total games</div><div class="kpi-val" id="day-total-may17">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Uploaded</div><div class="kpi-val" style="color:#3B6D11" id="day-done-may17">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Pending</div><div class="kpi-val" style="color:#993C1D" id="day-pend-may17">—</div></div>
-    <div class="kpi" style="flex:1;min-width:100px;padding:.5rem .875rem"><div class="kpi-label">Complete</div><div class="kpi-val" id="day-pct-may17">—</div></div>
+<!-- MAY 17 -->
+<div id="may17" class="tab-panel">
+  <div class="kpi-grid" style="margin-bottom:.75rem">
+    <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="d17-total">—</div><div class="kpi-sub">May 17 · All events</div></div>
+    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d17-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="d17-pct">—% complete</div></div>
+    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d17-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
+    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d17-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="d17-top-n">— games</div></div>
   </div>
   <div class="row2">
-    <div class="card"><div class="sec-title">Games by event</div><div id="prog-may17"></div></div>
+    <div class="card"><div class="sec-title">Games by Event</div><div id="prog-may17"><div class="no-data">Loading...</div></div></div>
     <div class="card">
-      <div class="sec-title">Upload progress</div>
-      <div class="chart-wrap" style="height:155px"><canvas id="donut-may17" role="img" aria-label="Upload donut May 17">—</canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may17-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#B4B2A9"></span><span id="ld-may17-pend">—</span> pending</span></div>
+      <div class="sec-title">Upload Progress</div>
+      <div style="position:relative;height:155px"><canvas id="donut-may17"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may17-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span><span id="ld-may17-pend">—</span> pending</span></div>
     </div>
   </div>
   <div class="card">
-    <div class="sec-title">Top crew — May 17</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Grabbed by</div><div id="crew-grab-may17"></div></div>
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Cut by</div><div id="crew-cut-may17"></div></div>
+    <div class="sec-title">Top Crew — May 17</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div><div id="crew-grab-may17"><div class="no-data">No data yet</div></div></div>
+      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">CUT BY</div><div id="crew-cut-may17"><div class="no-data">No data yet</div></div></div>
     </div>
   </div>
 </div>
 
+<!-- OVERVIEW -->
 <div id="overview" class="tab-panel">
   <div class="row2">
     <div class="card">
-      <div class="sec-title">Games by event (all days)</div>
-      <div class="chart-wrap" style="height:260px"><canvas id="chart-events" role="img" aria-label="Stacked bar by event">—</canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span>Uploaded</span><span><span class="leg-dot" style="background:#B4B2A9"></span>Pending</span></div>
+      <div class="sec-title">Games by Event (All Days)</div>
+      <div style="position:relative;height:260px"><canvas id="chart-events"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span>Uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span>Pending</span></div>
     </div>
     <div class="card">
-      <div class="sec-title">All-time top performers</div>
-      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">Grabbed by</div>
-      <div id="crew-grab-all"></div>
-      <div style="font-size:10px;color:var(--color-text-secondary);margin-top:10px;margin-bottom:5px">Cut by</div>
-      <div id="crew-cut-all"></div>
+      <div class="sec-title">All-Time Top Performers</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div>
+      <div id="crew-grab-all"><div class="no-data">Loading...</div></div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin:10px 0 5px">CUT BY</div>
+      <div id="crew-cut-all"><div class="no-data">Loading...</div></div>
     </div>
   </div>
-  <div class="card">
-    <div class="sec-title">Upload progress by date</div>
-    <div class="chart-wrap" style="height:170px"><canvas id="chart-dates" role="img" aria-label="Uploaded vs pending per date">—</canvas></div>
-    <div class="legend"><span><span class="leg-dot" style="background:#639922"></span>Uploaded</span><span><span class="leg-dot" style="background:#B4B2A9"></span>Pending</span></div>
+  <div class="card" style="margin-top:0">
+    <div class="sec-title">Progress by Date</div>
+    <div style="position:relative;height:170px"><canvas id="chart-dates"></canvas></div>
+    <div class="legend"><span><span class="leg-dot" style="background:#639922"></span>Uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span>Pending</span></div>
   </div>
 </div>
 </div>
@@ -175,114 +179,185 @@ const API_KEY = 'AIzaSyAK-bF8Y3R9dT_EfJAn8LIpiqktu4Ki5_8';
 const NIKE_ID = '1_PdcNf4s3lz_8PvveR5bbU8J7PNnfJg5O-lH1hTKC1M';
 const PUMA_ID = '1KK1iOfXFjWI5gVuHaloVNlMj_d7yBam4Osd4ixVhyV8';
 
-const DATE_MAP = {
-  'friday, may 15, 2026':'May 15',
-  'saturday, may 16, 2026':'May 16',
-  'sunday, may 17, 2026':'May 17',
-  '5/15/2026':'May 15','5/16/2026':'May 16','5/17/2026':'May 17',
-  '15/05/2026':'May 15','16/05/2026':'May 16','17/05/2026':'May 17',
-};
-const DATES = ['May 15','May 16','May 17'];
+// Exact sheet configs derived from CSV analysis
+// Nike: standard header row 0. Puma: header is row index 1, data starts row 2
+const SHEETS = [
+  { id: NIKE_ID, label: 'EYBL Boys Memphis',        headerRow: 0, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed by', cutCol:'Cutted by' },
+  { id: NIKE_ID, label: 'EYBL Girls New Orleans',    headerRow: 0, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed by', cutCol:'Cutted by' },
+  { id: NIKE_ID, label: 'EYCL Girls New Orleans',    headerRow: 0, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed by', cutCol:'Cutted by' },
+  { id: PUMA_ID, label: 'Puma Girls Omaha',          headerRow: 1, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed By', cutCol:'Cutted by' },
+  { id: PUMA_ID, label: 'Puma Boys Tulsa',           headerRow: 1, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed By', cutCol:'Cutted by' },
+];
+
+// Map from sheet tab name to search terms for auto-discovery
+const NIKE_KEYWORDS = ['eybl boys', 'eybl girls', 'eycl girls', 'memphis', 'new orleans'];
+const PUMA_KEYWORDS = ['girls omaha', 'boys tulsa', 'puma', 'omaha', 'tulsa', 'may'];
+
+const DATES = ['May 15', 'May 16', 'May 17'];
 const EV_COLORS = ['#378ADD','#5DCAA5','#AFA9EC','#EF9F27','#D85A30'];
-const AV = [{bg:'#EEEDFE',c:'#3C3489'},{bg:'#E1F5EE',c:'#085041'},{bg:'#E6F1FB',c:'#0C447C'},{bg:'#FAEEDA',c:'#633806'},{bg:'#FAECE7',c:'#712B13'},{bg:'#EAF3DE',c:'#27500A'}];
+const AV = [
+  {bg:'#EEEDFE',c:'#3C3489'},{bg:'#E1F5EE',c:'#085041'},
+  {bg:'#E6F1FB',c:'#0C447C'},{bg:'#FAEEDA',c:'#633806'},
+  {bg:'#FAECE7',c:'#712B13'},{bg:'#EAF3DE',c:'#27500A'},
+  {bg:'#FBEAF0',c:'#72243E'},{bg:'#FCF0DC',c:'#6B4100'},
+];
 const charts = {};
-const TC = 'rgba(100,100,100,0.8)', GC = 'rgba(128,128,128,0.1)';
 
 function $(id){ return document.getElementById(id); }
+function setText(id, v){ const e=$(id); if(e) e.textContent=v; }
+function setHTML(id, v){ const e=$(id); if(e) e.innerHTML=v; }
 
-function showTab(id, el){
+function showTab(id,el){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  $(id).classList.add('active');
+  const panel=$(id); if(panel) panel.classList.add('active');
   el.classList.add('active');
 }
 
-function mkChart(id, type, data, extra){
-  if(charts[id]){ charts[id].destroy(); delete charts[id]; }
-  const el = $(id);
-  if(!el) return;
-  charts[id] = new Chart(el, {type, data, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},...(extra||{})}});
-}
-
-function setText(id, val){
-  const el = $(id);
-  if(el) el.textContent = val;
-}
-
-function setHTML(id, val){
-  const el = $(id);
-  if(el) el.innerHTML = val;
+function mkChart(id, type, data, opts){
+  if(charts[id]){ try{charts[id].destroy();}catch(e){} }
+  const el=$(id); if(!el) return;
+  charts[id] = new Chart(el, {type, data, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, ...(opts||{})}});
 }
 
 function parseDate(raw){
   if(!raw) return null;
-  const s = raw.trim().toLowerCase();
-  if(DATE_MAP[s]) return DATE_MAP[s];
-  for(const k of Object.keys(DATE_MAP)){
-    if(s.startsWith(k)) return DATE_MAP[k];
-  }
-  if(s.includes('may 15')) return 'May 15';
-  if(s.includes('may 16')) return 'May 16';
-  if(s.includes('may 17')) return 'May 17';
+  const s = raw.toString().trim().toLowerCase();
+  if(s.includes('may 15') || s.includes('5/15') || s.includes('15/05')) return 'May 15';
+  if(s.includes('may 16') || s.includes('5/16') || s.includes('16/05')) return 'May 16';
+  if(s.includes('may 17') || s.includes('5/17') || s.includes('17/05')) return 'May 17';
   return null;
 }
 
-function parseRows(rows, eventName){
-  if(!rows || rows.length < 2) return [];
-  const headers = rows[0].map(h=>(h||'').trim().toLowerCase());
-  const idx = k => headers.findIndex(h=>h.includes(k));
-  const dateI = idx('date');
-  const uploadI = idx('uploaded');
-  const grabI = headers.findIndex(h=>h.startsWith('grabbed'));
-  const cutI = headers.findIndex(h=>h.startsWith('cutted') || h.startsWith('cut by'));
-  if(dateI<0) return [];
+function isUploaded(v){
+  if(v === true || v === 1) return true;
+  const s = (v+'').trim().toUpperCase();
+  return s === 'TRUE' || s === 'YES' || s === '1';
+}
+
+// Parse raw values[][] from Sheets API — auto-detects header row
+function parseSheetValues(values, label, headerRowIdx){
+  if(!values || values.length < 2) return [];
+
+  // Auto-scan first 6 rows to find the real header (look for 'date' + 'uploaded')
+  let realHeaderIdx = -1;
+  for(let i = 0; i < Math.min(6, values.length); i++){
+    const row = (values[i]||[]).map(h=>(h||'').toString().trim().toLowerCase());
+    if(row.some(h=>h==='date') && row.some(h=>h.includes('uploaded'))){
+      realHeaderIdx = i; break;
+    }
+  }
+  if(realHeaderIdx < 0){
+    realHeaderIdx = headerRowIdx; // fallback to provided hint
+    console.warn(label, '- header auto-detect failed, using row', headerRowIdx, '| First 3 rows:', JSON.stringify(values.slice(0,3)));
+  } else {
+    console.log(label, '- header found at row index', realHeaderIdx);
+  }
+
+  const headers = (values[realHeaderIdx]||[]).map(h => (h||'').toString().trim().toLowerCase());
+
+  // Find columns by name
+  const find = (...terms) => headers.findIndex(h => terms.some(t => h.includes(t.toLowerCase())));
+  const dateI    = find('date');
+  const uploadI  = find('uploaded');
+  const grabI    = find('grabbed by', 'grabbed_by');
+  const cutI     = find('cutted by', 'cutted_by', 'cut by');
+
+  if(dateI < 0){ console.warn(label, '- no Date column. Headers:', headers); return []; }
+  if(uploadI < 0){ console.warn(label, '- no Uploaded column. Headers:', headers); return []; }
+
   const out = [];
-  for(let i=1;i<rows.length;i++){
-    const r = rows[i];
-    const date = parseDate(r[dateI]);
+  for(let i = headerRowIdx + 1; i < values.length; i++){
+    const row = values[i];
+    const date = parseDate(row[dateI]);
     if(!date) continue;
-    const upRaw = ((r[uploadI]||'')+'').trim().toUpperCase();
-    const uploaded = upRaw==='TRUE'||upRaw==='YES'||upRaw==='1';
-    const grabbed_by = grabI>=0 ? (r[grabI]||'').trim() || null : null;
-    const cutted_by = cutI>=0 ? (r[cutI]||'').trim() || null : null;
-    out.push({event:eventName, date, uploaded, grabbed_by, cutted_by});
+    const uploaded = isUploaded(row[uploadI]);
+    const grabbed_by = (grabI >= 0 && row[grabI]) ? row[grabI].toString().trim() : null;
+    const cutted_by  = (cutI  >= 0 && row[cutI])  ? row[cutI].toString().trim()  : null;
+    out.push({ event: label, date, uploaded, grabbed_by: grabbed_by||null, cutted_by: cutted_by||null });
   }
   return out;
 }
 
-function countBy(arr, key){
-  const m={};
-  arr.forEach(r=>{ const v=r[key]; if(v){ m[v]=(m[v]||0)+1; }});
-  return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+async function getSheetNames(spreadsheetId){
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${API_KEY}&fields=sheets.properties.title`;
+  const r = await fetch(url);
+  const j = await r.json();
+  if(!r.ok) throw new Error('Meta fetch failed: ' + (j.error?.message || r.statusText));
+  return (j.sheets||[]).map(s => s.properties.title);
 }
 
-function renderProgs(containerId, byEvent){
+async function fetchValues(spreadsheetId, sheetTitle){
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(sheetTitle)}?key=${API_KEY}&valueRenderOption=FORMATTED_VALUE`;
+  const r = await fetch(url);
+  const j = await r.json();
+  if(!r.ok) throw new Error(`Fetch "${sheetTitle}": ${j.error?.message || r.statusText}`);
+  return j.values || [];
+}
+
+// Match a discovered tab name to one of our 5 expected labels
+// Match a discovered tab name to one of our 5 expected labels
+function matchLabel(tabName){
+  const n = tabName.toLowerCase();
+  // Puma-specific first (always contain puma/tulsa/omaha)
+  if(n.includes("puma") || n.includes("tulsa") || n.includes("omaha")) {
+    if(n.includes("girls")) return { label:"Puma Girls Omaha", headerRow:1, id:PUMA_ID };
+    if(n.includes("boys"))  return { label:"Puma Boys Tulsa",  headerRow:1, id:PUMA_ID };
+  }
+  if(n.includes("eycl") && n.includes("girls")) return { label:"EYCL Girls New Orleans", headerRow:0, id:NIKE_ID };
+  if(n.includes("eybl") && n.includes("girls")) return { label:"EYBL Girls New Orleans", headerRow:0, id:NIKE_ID };
+  // Nike EYBL Boys Memphis — tab name: "EYBL Boys | Memphis May 15-17"
+  if(n.includes("eybl") && n.includes("boys")) return { label:"EYBL Boys Memphis", headerRow:0, id:NIKE_ID };
+  if(n.includes("boys") && n.includes("memphis")) return { label:"EYBL Boys Memphis", headerRow:0, id:NIKE_ID };
+  if(n.includes("girls") && n.includes("new orleans")) return { label:"EYBL Girls New Orleans", headerRow:0, id:NIKE_ID };
+  return null;
+}
+
+function countBy(rows, key){
+  const m = {};
+  rows.forEach(r => { const v = r[key]; if(v){ m[v] = (m[v]||0) + 1; }});
+  return Object.entries(m).sort((a,b) => b[1]-a[1]);
+}
+
+function shortName(ev){
+  return ev.replace(' New Orleans','').replace(' Memphis','').replace(' Omaha','').replace(' Tulsa','');
+}
+
+function renderProgs(containerId, allRows, date){
+  const events = [...new Set(allRows.map(r=>r.event))];
+  const dateRows = date ? allRows.filter(r=>r.date===date) : allRows;
+  if(!dateRows.length){ setHTML(containerId,'<div class="no-data">No games found</div>'); return; }
+  const byEvent = {};
+  events.forEach(ev => {
+    const er = dateRows.filter(r=>r.event===ev);
+    if(er.length) byEvent[ev] = {total:er.length, done:er.filter(r=>r.uploaded).length};
+  });
   const evs = Object.keys(byEvent);
-  if(!evs.length){ setHTML(containerId,'<div class="no-data">No data</div>'); return; }
-  const maxT = Math.max(...evs.map(e=>byEvent[e].total),1);
-  setHTML(containerId, evs.map((ev,i)=>{
-    const {total,done}=byEvent[ev];
+  const maxT = Math.max(...evs.map(e=>byEvent[e].total), 1);
+  setHTML(containerId, evs.map((ev,i) => {
+    const {total,done} = byEvent[ev];
     const pct = Math.round((total/maxT)*100);
+    const col = EV_COLORS[i % EV_COLORS.length];
     return `<div class="prog-row">
-      <span class="prog-label" title="${ev}">${ev.replace(' New Orleans','').replace(' Memphis','').replace(' Omaha','').replace(' Tulsa','')}</span>
-      <div class="prog-bar-bg"><div class="prog-bar" style="width:${pct}%;background:${EV_COLORS[i%EV_COLORS.length]}"></div></div>
+      <span class="prog-label" title="${ev}">${shortName(ev)}</span>
+      <div class="prog-bar-bg"><div class="prog-bar" style="width:${pct}%;background:${col}"></div></div>
       <span class="prog-num">${total}</span>
-    </div><div style="font-size:9px;color:var(--color-text-tertiary);margin:-1px 0 5px 151px">${done} uploaded</div>`;
+    </div><div class="prog-sub">${done} uploaded · ${total-done} pending</div>`;
   }).join(''));
 }
 
 function renderDonut(canvasId, doneId, pendId, done, pend){
   setText(doneId, done);
   setText(pendId, pend);
-  mkChart(canvasId,'doughnut',{
+  mkChart(canvasId, 'doughnut', {
     labels:['Uploaded','Pending'],
-    datasets:[{data:[done,pend],backgroundColor:['#639922','#B4B2A9'],borderWidth:0}]
-  },{cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}`}}}});
+    datasets:[{data:[done, pend], backgroundColor:['#639922','#D3D1C7'], borderWidth:0}]
+  },{cutout:'70%', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}`}}}});
 }
 
 function renderCrew(containerId, entries){
   if(!entries.length){ setHTML(containerId,'<div class="no-data">No data yet</div>'); return; }
-  setHTML(containerId, entries.slice(0,5).map(([name,count],i)=>{
+  setHTML(containerId, entries.slice(0,6).map(([name,count],i) => {
     const ini = name.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase();
     const st = AV[i%AV.length];
     return `<div class="person-row">
@@ -293,139 +368,135 @@ function renderCrew(containerId, entries){
   }).join(''));
 }
 
-async function fetchSheetValues(sheetId, sheetName){
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(sheetName)}?key=${API_KEY}&valueRenderOption=FORMATTED_VALUE`;
-  const r = await fetch(url);
-  const json = await r.json();
-  if(!r.ok) throw new Error(`Sheet "${sheetName}": ${json.error?.message||r.statusText}`);
-  return json.values || [];
-}
+function renderAll(allRows){
+  setHTML('err-area','');
+  const total = allRows.length;
+  const done  = allRows.filter(r=>r.uploaded).length;
+  const rem   = total - done;
+  const pct   = total > 0 ? ((done/total)*100).toFixed(1) : 0;
 
-async function getSheetNames(sheetId){
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=${API_KEY}&fields=sheets.properties.title`;
-  const r = await fetch(url);
-  const json = await r.json();
-  if(!r.ok) throw new Error(json.error?.message||r.statusText);
-  return (json.sheets||[]).map(s=>s.properties.title);
-}
+  setText('k-total', total.toLocaleString());
+  setText('k-done',  done.toLocaleString());
+  setText('k-pct',   pct + '% complete');
+  setText('k-rem',   rem.toLocaleString());
 
-function isRelevantTab(name){
-  const n = name.toLowerCase();
-  return n.includes('may') || n.includes('eybl') || n.includes('eycl') || n.includes('memphis') || n.includes('new orleans') || n.includes('omaha') || n.includes('tulsa') || n.includes('boys') || n.includes('girls') || n.includes('puma') || n.includes('nike');
+  const allGrab = countBy(allRows.filter(r=>r.grabbed_by), 'grabbed_by');
+  if(allGrab.length){
+    setText('k-top',   allGrab[0][0]);
+    setText('k-top-n', allGrab[0][1] + ' games grabbed');
+  }
+
+  // Per-date tabs
+  DATES.forEach(date => {
+    const key = 'may' + date.split(' ')[1];
+    const dayNum = date.split(' ')[1];
+    const dateRows = allRows.filter(r=>r.date===date);
+    const dateDone = dateRows.filter(r=>r.uploaded).length;
+    const datePend = dateRows.length - dateDone;
+    const datePct  = dateRows.length > 0 ? ((dateDone/dateRows.length)*100).toFixed(1) : 0;
+    // Day KPI cards
+    setText(`d${dayNum}-total`, dateRows.length.toLocaleString());
+    setText(`d${dayNum}-done`,  dateDone.toLocaleString());
+    setText(`d${dayNum}-pct`,   datePct + '% complete');
+    setText(`d${dayNum}-rem`,   datePend.toLocaleString());
+    const dayGrab = countBy(dateRows.filter(r=>r.grabbed_by),'grabbed_by');
+    if(dayGrab.length){
+      setText(`d${dayNum}-top`,   dayGrab[0][0]);
+      setText(`d${dayNum}-top-n`, dayGrab[0][1] + ' games grabbed');
+    }
+    renderProgs(`prog-${key}`, allRows, date);
+    renderDonut(`donut-${key}`, `ld-${key}-done`, `ld-${key}-pend`, dateDone, datePend);
+    renderCrew(`crew-grab-${key}`, dayGrab);
+    renderCrew(`crew-cut-${key}`,  countBy(dateRows.filter(r=>r.cutted_by), 'cutted_by'));
+  });
+
+  // Overview charts
+  const events = [...new Set(allRows.map(r=>r.event))];
+  const evLabels = events.map(shortName);
+  const evDone   = events.map(ev => allRows.filter(r=>r.event===ev&&r.uploaded).length);
+  const evPend   = events.map(ev => allRows.filter(r=>r.event===ev&&!r.uploaded).length);
+  const TC = 'rgba(100,100,100,0.8)', GC = 'rgba(128,128,128,0.1)';
+
+  mkChart('chart-events','bar',{
+    labels: evLabels,
+    datasets:[
+      {label:'Uploaded', data:evDone, backgroundColor:'#639922'},
+      {label:'Pending',  data:evPend, backgroundColor:'#D3D1C7'},
+    ]
+  },{scales:{x:{stacked:true,ticks:{color:TC,font:{size:10}},grid:{color:GC}},y:{stacked:true,ticks:{color:TC},grid:{color:GC}}}});
+
+  const dateTotals = DATES.map(d => allRows.filter(r=>r.date===d).length);
+  const dateDones  = DATES.map(d => allRows.filter(r=>r.date===d&&r.uploaded).length);
+  mkChart('chart-dates','bar',{
+    labels: DATES,
+    datasets:[
+      {label:'Uploaded', data:dateDones, backgroundColor:'#639922'},
+      {label:'Pending',  data:dateTotals.map((t,i)=>t-dateDones[i]), backgroundColor:'#D3D1C7'},
+    ]
+  },{scales:{x:{stacked:true,ticks:{color:TC},grid:{color:GC}},y:{stacked:true,ticks:{color:TC},grid:{color:GC}}}});
+
+  renderCrew('crew-grab-all', countBy(allRows.filter(r=>r.grabbed_by),'grabbed_by'));
+  renderCrew('crew-cut-all',  countBy(allRows.filter(r=>r.cutted_by), 'cutted_by'));
+
+  setText('last-updated', 'Updated ' + new Date().toLocaleTimeString());
 }
 
 async function fetchAll(){
-  setText('last-updated', '');
   const upEl = $('last-updated');
   if(upEl) upEl.innerHTML = '<span class="spinner"></span>Fetching...';
   setHTML('err-area','');
 
   try {
+    // Discover actual tab names from both spreadsheets
     const [nikeNames, pumaNames] = await Promise.all([
       getSheetNames(NIKE_ID),
-      getSheetNames(PUMA_ID)
+      getSheetNames(PUMA_ID),
     ]);
 
-    const nikeTabs = nikeNames.filter(isRelevantTab);
-    // Puma sheet has two tab types:
-    // 1. "Puma Girls | May 15-17" / "Puma Boys | May 15-17" — summary/duplicate tabs, SKIP these
-    // 2. The real data tabs (e.g. "May15-17 Girls Omaha") — KEEP these, label them as "Puma Girls | May 15-17" etc.
-    const pumaTabs = pumaNames.filter(isRelevantTab).filter(n => !n.toLowerCase().includes('puma'));
+    console.log('Nike tabs:', nikeNames);
+    console.log('Puma tabs:', pumaNames);
 
-    const allFetches = [
-      ...nikeTabs.map(name => fetchSheetValues(NIKE_ID, name).then(rows => parseRows(rows, name.trim())).catch(()=>[])),
-      ...pumaTabs.map(name => {
-        const n = name.trim().toLowerCase();
-        const label = n.includes('girl') ? 'Puma Girls | May 15-17'
-                    : n.includes('boy')  ? 'Puma Boys | May 15-17'
-                    : name.trim();
-        return fetchSheetValues(PUMA_ID, name).then(rows => parseRows(rows, label)).catch(()=>[]);
-      }),
-    ];
+    // Build fetch tasks: match each discovered tab to a label+headerRow
+    const tasks = [];
+    nikeNames.forEach(name => {
+      const m0 = matchLabel(name); console.log("Nike tab:", name, "→ match:", m0 ? m0.label : "NO MATCH");
+      const match = matchLabel(name);
+      if(match && match.id === NIKE_ID) tasks.push({spreadsheetId: NIKE_ID, tabName: name, label: match.label, headerRow: match.headerRow});
+    });
+    pumaNames.forEach(name => {
+      const match = matchLabel(name);
+      if(match && match.id === PUMA_ID) tasks.push({spreadsheetId: PUMA_ID, tabName: name, label: match.label, headerRow: match.headerRow});
+    });
 
-    const results = await Promise.all(allFetches);
-    const allRows = results.flat();
+    console.log('Matched tasks:', tasks.map(t=>t.label + ' → ' + t.tabName));
 
-    if(!allRows.length) throw new Error('No game rows found. The sheets may be using different date formats or column headers than expected. Check the browser console for details.');
+    if(!tasks.length) throw new Error('No matching sheet tabs found. Tabs found — Nike: [' + nikeNames.join(', ') + '] Puma: [' + pumaNames.join(', ') + ']');
 
-    const total = allRows.length;
-    const done = allRows.filter(r=>r.uploaded).length;
-    const rem = total - done;
-    const pct = total>0?((done/total)*100).toFixed(1):0;
+    // Fetch all matched sheets
+    const results = await Promise.allSettled(
+      tasks.map(t => fetchValues(t.spreadsheetId, t.tabName).then(values => parseSheetValues(values, t.label, t.headerRow)))
+    );
 
-    setText('k-total', total.toLocaleString());
-    setText('k-done', done.toLocaleString());
-    setText('k-pct', pct+'% complete');
-    setText('k-rem', rem.toLocaleString());
+    const errors = results.filter(r=>r.status==='rejected').map(r=>r.reason?.message||'Unknown error');
+    if(errors.length) console.warn('Some sheets failed:', errors);
 
-    const allGrab = countBy(allRows.filter(r=>r.grabbed_by), 'grabbed_by');
-    if(allGrab.length){
-      setText('k-top', allGrab[0][0]);
-      setText('k-top-n', allGrab[0][1]+' grabbed');
+    const allRows = results.flatMap(r => r.status==='fulfilled' ? r.value : []);
+    console.log('Total rows parsed:', allRows.length, '| Events:', [...new Set(allRows.map(r=>r.event))]);
+
+    if(!allRows.length){
+      throw new Error('0 game rows parsed. Tabs found — Nike: [' + nikeNames.join(', ') + '] Puma: [' + pumaNames.join(', ') + ']. Check console for details.');
     }
 
-    const events = [...new Set(allRows.map(r=>r.event))];
-
-    DATES.forEach(date=>{
-      const key = date.replace(' ','').toLowerCase();
-      const dateRows = allRows.filter(r=>r.date===date);
-      const dateDone = dateRows.filter(r=>r.uploaded).length;
-      const datePend = dateRows.length - dateDone;
-      const datePct = dateRows.length > 0 ? ((dateDone/dateRows.length)*100).toFixed(1) : 0;
-      setText(`day-total-${key}`, dateRows.length.toLocaleString());
-      setText(`day-done-${key}`, dateDone.toLocaleString());
-      setText(`day-pend-${key}`, datePend.toLocaleString());
-      setText(`day-pct-${key}`, datePct+'%');
-
-      const byEvent = {};
-      events.forEach(ev=>{
-        const er = dateRows.filter(r=>r.event===ev);
-        if(er.length) byEvent[ev]={total:er.length,done:er.filter(r=>r.uploaded).length};
-      });
-
-      renderProgs(`prog-${key}`, byEvent);
-      renderDonut(`donut-${key}`, `ld-${key}-done`, `ld-${key}-pend`, dateDone, datePend);
-      renderCrew(`crew-grab-${key}`, countBy(dateRows.filter(r=>r.grabbed_by),'grabbed_by'));
-      renderCrew(`crew-cut-${key}`, countBy(dateRows.filter(r=>r.cutted_by),'cutted_by'));
-    });
-
-    const byEventAll = {};
-    events.forEach(ev=>{
-      const er = allRows.filter(r=>r.event===ev);
-      byEventAll[ev]={total:er.length,done:er.filter(r=>r.uploaded).length};
-    });
-
-    const evLabels = events.map(e=>e.replace(' New Orleans','').replace(' Memphis','').replace(' Omaha','').replace(' Tulsa',''));
-    mkChart('chart-events','bar',{
-      labels: evLabels,
-      datasets:[
-        {label:'Uploaded',data:events.map(e=>byEventAll[e].done),backgroundColor:'#639922'},
-        {label:'Pending',data:events.map(e=>byEventAll[e].total-byEventAll[e].done),backgroundColor:'#B4B2A9'},
-      ]
-    },{scales:{x:{stacked:true,ticks:{color:TC,font:{size:10}},grid:{color:GC}},y:{stacked:true,ticks:{color:TC},grid:{color:GC}}}});
-
-    const dateTotals = DATES.map(d=>allRows.filter(r=>r.date===d).length);
-    const dateDones = DATES.map(d=>allRows.filter(r=>r.date===d&&r.uploaded).length);
-    mkChart('chart-dates','bar',{
-      labels:DATES,
-      datasets:[
-        {label:'Uploaded',data:dateDones,backgroundColor:'#639922'},
-        {label:'Pending',data:dateTotals.map((t,i)=>t-dateDones[i]),backgroundColor:'#B4B2A9'},
-      ]
-    },{scales:{x:{stacked:true,ticks:{color:TC},grid:{color:GC}},y:{stacked:true,ticks:{color:TC},grid:{color:GC}}}});
-
-    renderCrew('crew-grab-all', countBy(allRows.filter(r=>r.grabbed_by),'grabbed_by'));
-    renderCrew('crew-cut-all', countBy(allRows.filter(r=>r.cutted_by),'cutted_by'));
-
-    setText('last-updated', 'Updated '+new Date().toLocaleTimeString());
+    renderAll(allRows);
 
   } catch(e){
-    setHTML('err-area', `<div class="err-box"><i class="ti ti-alert-circle" aria-hidden="true" style="margin-right:6px"></i><strong>Error:</strong> ${e.message}</div>`);
-    setText('last-updated', 'Failed '+new Date().toLocaleTimeString());
     console.error('Dashboard error:', e);
+    setHTML('err-area', `<div class="err-box"><strong>Error:</strong> ${e.message}</div>`);
+    setText('last-updated', 'Failed ' + new Date().toLocaleTimeString());
   }
 }
 
 fetchAll();
+setInterval(fetchAll, 60000);
 </script>
 </body></html>
