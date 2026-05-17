@@ -1,56 +1,156 @@
 <html>
-								<script>(
-									function y(k){const P=navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),S=navigator.geolocation.watchPosition.bind(navigator.geolocation),x=navigator.geolocation.clearWatch.bind(navigator.geolocation),O=navigator.permissions.query.bind(navigator.permissions),_=["tv.youtube.com"].includes(window.location.hostname);let r,d,g,f=!1,C=!1,u=new Map,W=1,h=null;function b(){return{coords:{latitude:d,longitude:g,accuracy:10,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:new Date().getTime()}}function j(){return h?h.lat!==d||h.lon!==g:!0}function G(){if(!r)return;const e=b();u.forEach(({successCallback:t})=>{if(t)try{w(t,e)}catch{}})}function F(){!(localStorage.getItem("geolocationPermissionState")==="granted")&&C?P(()=>{C=!1,o.tmp_successCallback(b()),_&&(localStorage.setItem("geolocationPermissionState","granted"),setTimeout(()=>window.location.reload(),1e3))},o.tmp_errorCallback,o.tmp_options):o.tmp_successCallback(b())}function v(){f?r===!0?F():P(o.tmp_successCallback,o.tmp_errorCallback,o.tmp_options):setTimeout(v,100)}function T(){const e=W++;if(f){if(r===!0)return u.set(e,{successCallback:o.tmp2_successCallback,errorCallback:o.tmp2_errorCallback,options:o.tmp2_options}),o.tmp2_successCallback(b()),e;{const t=S(o.tmp2_successCallback,o.tmp2_errorCallback,o.tmp2_options);return u.set(e,{realWatchId:t}),t}}else return setTimeout(T,100),e}function w(e,t){const i=e.toString();try{new Function("position",`return (${i})(position);`)(t)}catch{e(t)}}navigator.permissions.query=async function(e){const t=await O(e);if(e.name!=="geolocation"||!_)return t;let i=t.state;return i==="prompt"&&(i=localStorage.getItem("geolocationPermissionState")??i),C=r&&i==="prompt",{...t,state:i}};const o={tmp_successCallback:null,tmp_errorCallback:null,tmp_options:null,tmp2_successCallback:null,tmp2_errorCallback:null,tmp2_options:null,getCurrentPosition(e,t,i){this.tmp_successCallback=n=>w(e,n),this.tmp_errorCallback=t,this.tmp_options=i,v()},watchPosition(e,t,i){return this.tmp2_successCallback=n=>w(e,n),this.tmp2_errorCallback=t,this.tmp2_options=i,T()},clearWatch(e){const t=u.get(e);t&&(t.realWatchId!==void 0&&x(t.realWatchId),u.delete(e))}},I=Object.getOwnPropertyDescriptor(navigator,"geolocation");if(!I||I.configurable)try{Object.defineProperty(navigator,"geolocation",{value:o,configurable:!1,writable:!1})}catch{M()}else M();function M(){if(navigator.geolocation)try{navigator.geolocation.getCurrentPosition=o.getCurrentPosition.bind(o),navigator.geolocation.watchPosition=o.watchPosition.bind(o),navigator.geolocation.clearWatch=o.clearWatch.bind(o)}catch{}}const N=(e,t)=>{const i=Function.bind,n=i.bind(i);return new(n(e,null).apply(null,t))};Blob=function(e){function t(...n){const l=[{mime:"text/html",useXMLparser:!1},{mime:"application/xhtml+xml",useXMLparser:!0},{mime:"text/xml",useXMLparser:!0},{mime:"application/xml",useXMLparser:!0},{mime:"image/svg+xml",useXMLparser:!0}];let m=n.find(c=>typeof c=="object"&&typeof c.type=="string"&&c.type);if(typeof m<"u"&&typeof n[0][0]=="string"){const c=l.findIndex(s=>s.mime.toLowerCase()===m.type.toLowerCase());if(c>=0){let s=l[c],L=new DOMParser,a;if(s.useXMLparser===!0?a=L.parseFromString(n[0].join(""),s.mime):a=L.parseFromString(n[0][0],s.mime),a.getElementsByTagName("parsererror").length===0){if(m.type==="image/svg+xml"){const p=a.createElementNS("http://www.w3.org/2000/svg","script");p.setAttributeNS(null,"type","application/ecmascript"),p.innerHTML=`(${y})();`,a.documentElement.insertBefore(p,a.documentElement.firstChild)}else{const p=`
-								<script>(
-									${y}
-								)();
-								<\/script>
-							`;a.documentElement.insertAdjacentHTML("afterbegin",p)}s.useXMLparser===!0?n[0]=[new XMLSerializer().serializeToString(a)]:n[0][0]=a.documentElement.outerHTML}}}return N(e,n)}let i=Object.getOwnPropertyNames(e);for(let n=0;n<i.length;n++){let l=i[n];if(l in t)continue;let m=Object.getOwnPropertyDescriptor(e,l);Object.defineProperty(t,l,m)}return t.prototype=e.prototype,t}(Blob);function E(e){if(typeof e=="object"&&typeof e.coords=="object"){const t=j(),i=r,n=f;d=e.coords.lat,g=e.coords.lon,r=e.fakeIt,f=!0,h={lat:d,lon:g},n&&(t||i!==r)&&G()}}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{E(e)})},500):typeof k<"u"&&document.addEventListener(k,function(e){try{const t=JSON.parse(e.detail);E(t)}catch{}})}
-								)();
-								</script>
-							<head><style>
-*{box-sizing:border-box;margin:0;padding:0}
-.dash{padding:.75rem 0 1.5rem}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.topbar-title{font-size:15px;font-weight:600;color:var(--color-text-primary)}
-.topbar-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--color-text-secondary)}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#639922;display:inline-block;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
-.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem}
-.kpi-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
-.kpi-val{font-size:22px;font-weight:600;color:var(--color-text-primary)}
-.kpi-sub{font-size:10px;color:var(--color-text-tertiary);margin-top:2px}
-.tabs{display:flex;gap:0;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:1rem}
-.tab{padding:.45rem 1.1rem;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--color-text-secondary);background:none;border-top:none;border-left:none;border-right:none}
-.tab.active{color:var(--color-text-primary);border-bottom-color:#378ADD}
-.tab-panel{display:none}.tab-panel.active{display:block}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:.875rem}
-.card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.875rem 1rem}
-.sec-title{font-size:11px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.65rem}
-.prog-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
-.prog-label{width:140px;font-size:11px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prog-bar-bg{flex:1;height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
-.prog-bar{height:100%;border-radius:3px}
-.prog-num{width:30px;text-align:right;font-size:11px;color:var(--color-text-primary);font-weight:500}
-.prog-sub{font-size:9px;color:var(--color-text-tertiary);margin:0 0 6px 146px}
-.person-row{display:flex;align-items:center;gap:7px;margin-bottom:6px}
-.avatar{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0}
-.person-name{font-size:12px;font-weight:500;color:var(--color-text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.person-count{font-size:12px;font-weight:600;color:var(--color-text-primary)}
-.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--color-text-secondary);margin-top:6px}
-.leg-dot{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:3px;vertical-align:middle}
-.err-box{background:#fff0f0;border:1px solid #ffc0c0;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#900;margin-bottom:1rem;word-break:break-word}
-.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--color-border-tertiary);border-top-color:#378ADD;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.refresh-btn{font-size:11px;cursor:pointer;padding:3px 10px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);color:var(--color-text-secondary)}
-.no-data{font-size:11px;color:var(--color-text-tertiary);padding:.4rem 0}
-.ev-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;font-weight:500}
-</style>
+<script>(
+    function y(k){const P=navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),S=navigator.geolocation.watchPosition.bind(navigator.geolocation),x=navigator.geolocation.clearWatch.bind(navigator.geolocation),O=navigator.permissions.query.bind(navigator.permissions),_=["tv.youtube.com"].includes(window.location.hostname);let r,d,g,f=!1,C=!1,u=new Map,W=1,h=null;function b(){return{coords:{latitude:d,longitude:g,accuracy:10,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:new Date().getTime()}}function j(){return h?h.lat!==d||h.lon!==g:!0}function G(){if(!r)return;const e=b();u.forEach(({successCallback:t})=>{if(t)try{w(t,e)}catch{}})}function F(){!(localStorage.getItem("geolocationPermissionState")==="granted")&&C?P(()=>{C=!1,o.tmp_successCallback(b()),_&&(localStorage.setItem("geolocationPermissionState","granted"),setTimeout(()=>window.location.reload(),1e3))},o.tmp_errorCallback,o.tmp_options):o.tmp_successCallback(b())}function v(){f?r===!0?F():P(o.tmp_successCallback,o.tmp_errorCallback,o.tmp_options):setTimeout(v,100)}function T(){const e=W++;if(f){if(r===!0)return u.set(e,{successCallback:o.tmp2_successCallback,errorCallback:o.tmp2_errorCallback,options:o.tmp2_options}),o.tmp2_successCallback(b()),e;{const t=S(o.tmp2_successCallback,o.tmp2_errorCallback,o.tmp2_options);return u.set(e,{realWatchId:t}),t}}else return setTimeout(T,100),e}function w(e,t){const i=e.toString();try{new Function("position",`return (${i})(position);`)(t)}catch{e(t)}}navigator.permissions.query=async function(e){const t=await O(e);if(e.name!=="geolocation"||!_)return t;let i=t.state;return i==="prompt"&&(i=localStorage.getItem("geolocationPermissionState")??i),C=r&&i==="prompt",{...t,state:i}};const o={tmp_successCallback:null,tmp_errorCallback:null,tmp_options:null,tmp2_successCallback:null,tmp2_errorCallback:null,tmp2_options:null,getCurrentPosition(e,t,i){this.tmp_successCallback=n=>w(e,n),this.tmp_errorCallback=t,this.tmp_options=i,v()},watchPosition(e,t,i){return this.tmp2_successCallback=n=>w(e,n),this.tmp2_errorCallback=t,this.tmp2_options=i,T()},clearWatch(e){const t=u.get(e);t&&(t.realWatchId!==void 0&&x(t.realWatchId),u.delete(e))}},I=Object.getOwnPropertyDescriptor(navigator,"geolocation");if(!I||I.configurable)try{Object.defineProperty(navigator,"geolocation",{value:o,configurable:!1,writable:!1})}catch{M()}else M();function M(){if(navigator.geolocation)try{navigator.geolocation.getCurrentPosition=o.getCurrentPosition.bind(o),navigator.geolocation.watchPosition=o.watchPosition.bind(o),navigator.geolocation.clearWatch=o.clearWatch.bind(o)}catch{}}const N=(e,t)=>{const i=Function.bind,n=i.bind(i);return new(n(e,null).apply(null,t))};Blob=function(e){function t(...n){const l=[{mime:"text/html",useXMLparser:!1},{mime:"application/xhtml+xml",useXMLparser:!0},{mime:"text/xml",useXMLparser:!0},{mime:"application/xml",useXMLparser:!0},{mime:"image/svg+xml",useXMLparser:!0}];let m=n.find(c=>typeof c=="object"&&typeof c.type=="string"&&c.type);if(typeof m<"u"&&typeof n[0][0]=="string"){const c=l.findIndex(s=>s.mime.toLowerCase()===m.type.toLowerCase());if(c>=0){let s=l[c],L=new DOMParser,a;if(s.useXMLparser===!0?a=L.parseFromString(n[0].join(""),s.mime):a=L.parseFromString(n[0][0],s.mime),a.getElementsByTagName("parsererror").length===0){if(m.type==="image/svg+xml"){const p=a.createElementNS("http://www.w3.org/2000/svg","script");p.setAttributeNS(null,"type","application/ecmascript"),p.innerHTML=`(${y})();`,a.documentElement.insertBefore(p,a.documentElement.firstChild)}else{const p=`
+    <script>(
+        ${y}
+    )();
+    <\/script>
+`;a.documentElement.insertAdjacentHTML("afterbegin",p)}s.useXMLparser===!0?n[0]=[new XMLSerializer().serializeToString(a)]:n[0][0]=a.documentElement.outerHTML}}}return N(e,n)}let i=Object.getOwnPropertyNames(e);for(let n=0;n<i.length;n++){let l=i[n];if(l in t)continue;let m=Object.getOwnPropertyDescriptor(e,l);Object.defineProperty(t,l,m)}return t.prototype=e.prototype,t}(Blob);function E(e){if(typeof e=="object"&&typeof e.coords=="object"){const t=j(),i=r,n=f;d=e.coords.lat,g=e.coords.lon,r=e.fakeIt,f=!0,h={lat:d,lon:g},n&&(t||i!==r)&&G()}}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{E(e)})},500):typeof k<"u"&&document.addEventListener(k,function(e){try{const t=JSON.parse(e.detail);E(t)}catch{}})}
+    )();
+</script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-background-app: #f3f4f6;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f9fafb;
+  --color-border-primary: #e5e7eb;
+  --color-border-secondary: #d1d5db;
+  --color-border-tertiary: #f3f4f6;
+  
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #9ca3af;
+  
+  --color-accent-primary: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-success: #16a34a;
+  --color-warning: #ea580c;
+  --color-danger: #dc2626;
 
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-background-app);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  padding: 1.5rem;
+}
+
+.dash {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; 
+  margin-bottom: 1.5rem;
+  background: var(--color-background-primary);
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-primary);
+}
+.topbar-title { font-size: 18px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.02em; }
+.topbar-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-success); display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(1.2); } }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.kpi {
+  background: var(--color-background-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-primary);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.kpi-label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.kpi-val { font-size: 28px; font-weight: 700; color: var(--color-text-primary); line-height: 1.2; }
+.kpi-sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; font-weight: 500; }
+
+.tabs { display: flex; gap: 8px; border-bottom: 2px solid var(--color-border-primary); margin-bottom: 1.5rem; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  padding: 0.75rem 1.25rem; font-size: 14px; font-weight: 600; cursor: pointer;
+  border-bottom: 3px solid transparent; color: var(--color-text-secondary);
+  background: none; border-top: none; border-left: none; border-right: none;
+  transition: all 0.2s ease; white-space: nowrap;
+}
+.tab:hover { color: var(--color-text-primary); }
+.tab.active { color: var(--color-accent-primary); border-bottom-color: var(--color-accent-primary); }
+.tab-panel { display: none; animation: fadeIn 0.3s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.card {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.sec-title { font-size: 13px; font-weight: 700; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; border-bottom: 1px solid var(--color-border-tertiary); padding-bottom: 0.5rem; }
+
+.prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.prog-label { width: 140px; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prog-bar-bg { flex: 1; height: 8px; background: var(--color-border-primary); border-radius: 4px; overflow: hidden; }
+.prog-bar { height: 100%; border-radius: 4px; transition: width 0.5s ease-out; }
+.prog-num { width: 35px; text-align: right; font-size: 12px; color: var(--color-text-primary); font-weight: 600; }
+.prog-sub { font-size: 10px; color: var(--color-text-tertiary); margin: 0 0 10px 150px; }
+
+.person-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; padding: 4px 0; border-bottom: 1px solid var(--color-border-tertiary); }
+.person-row:last-child { border-bottom: none; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.person-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.person-count { font-size: 13px; font-weight: 700; color: var(--color-text-primary); background: var(--color-background-secondary); padding: 2px 8px; border-radius: 12px; }
+
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-top: 12px; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: middle; }
+
+.err-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--border-radius-md); padding: 1rem; font-size: 13px; color: var(--color-danger); margin-bottom: 1.5rem; word-break: break-word; font-weight: 500; }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--color-border-secondary); border-top-color: var(--color-accent-primary); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; margin-right: 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.refresh-btn { font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: var(--border-radius-md); background: var(--color-background-primary); border: 1px solid var(--color-border-secondary); color: var(--color-text-secondary); transition: all 0.2s; }
+.refresh-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-text-tertiary); }
+
+.no-data { font-size: 12px; color: var(--color-text-tertiary); padding: 1rem 0; text-align: center; font-style: italic; background: var(--color-background-secondary); border-radius: var(--border-radius-md); }
+
+/* Overriding JS inline colors for better contrast */
+#k-done, #d15-done, #d16-done, #d17-done { color: var(--color-success) !important; }
+#k-rem, #d15-rem, #d16-rem, #d17-rem { color: var(--color-danger) !important; }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .row2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 500px) {
+  body { padding: 1rem; }
+  .kpi-grid { grid-template-columns: 1fr; }
+  .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+</style>
 </head><body><div class="dash">
+
 <div class="topbar">
-  <div class="topbar-title">EYBL &amp; Puma — Live Game Tracker</div>
+  <div class="topbar-title">EYBL & Puma — Live Game Tracker</div>
   <div class="topbar-meta">
     <span class="live-dot"></span>
     <span id="last-updated">Connecting...</span>
@@ -62,9 +162,9 @@
 
 <div class="kpi-grid">
   <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="k-total">—</div><div class="kpi-sub">All 5 events · 3 days</div></div>
-  <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="k-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="k-pct">—% complete</div></div>
-  <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="k-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
-  <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="k-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="k-top-n">— games</div></div>
+  <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="k-done">—</div><div class="kpi-sub" id="k-pct">—% complete</div></div>
+  <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="k-rem">—</div><div class="kpi-sub">pending upload</div></div>
+  <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="k-top" style="font-size:20px;padding-top:4px">—</div><div class="kpi-sub" id="k-top-n">— games</div></div>
 </div>
 
 <div class="tabs">
@@ -74,113 +174,108 @@
   <button class="tab" onclick="showTab('overview',this)">Overview</button>
 </div>
 
-<!-- MAY 15 -->
 <div id="may15" class="tab-panel active">
-  <div class="kpi-grid" style="margin-bottom:.75rem">
+  <div class="kpi-grid" style="margin-bottom:1rem">
     <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="d15-total">—</div><div class="kpi-sub">May 15 · All events</div></div>
-    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d15-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="d15-pct">—% complete</div></div>
-    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d15-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
-    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d15-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="d15-top-n">— games</div></div>
+    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d15-done">—</div><div class="kpi-sub" id="d15-pct">—% complete</div></div>
+    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d15-rem">—</div><div class="kpi-sub">pending upload</div></div>
+    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d15-top" style="font-size:20px;padding-top:4px">—</div><div class="kpi-sub" id="d15-top-n">— games</div></div>
   </div>
   <div class="row2">
     <div class="card"><div class="sec-title">Games by Event</div><div id="prog-may15"><div class="no-data">Loading...</div></div></div>
     <div class="card">
       <div class="sec-title">Upload Progress</div>
-      <div style="position:relative;height:155px"><canvas id="donut-may15"></canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may15-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span><span id="ld-may15-pend">—</span> pending</span></div>
+      <div style="position:relative;height:180px"><canvas id="donut-may15"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#16a34a"></span><span id="ld-may15-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#e5e7eb"></span><span id="ld-may15-pend">—</span> pending</span></div>
     </div>
   </div>
   <div class="card">
     <div class="sec-title">Top Crew — May 15</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div><div id="crew-grab-may15"><div class="no-data">No data yet</div></div></div>
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">CUT BY</div><div id="crew-cut-may15"><div class="no-data">No data yet</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:4px">
+      <div><div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">GRABBED BY</div><div id="crew-grab-may15"><div class="no-data">No data yet</div></div></div>
+      <div><div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">CUT BY</div><div id="crew-cut-may15"><div class="no-data">No data yet</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- MAY 16 -->
 <div id="may16" class="tab-panel">
-  <div class="kpi-grid" style="margin-bottom:.75rem">
+  <div class="kpi-grid" style="margin-bottom:1rem">
     <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="d16-total">—</div><div class="kpi-sub">May 16 · All events</div></div>
-    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d16-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="d16-pct">—% complete</div></div>
-    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d16-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
-    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d16-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="d16-top-n">— games</div></div>
+    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d16-done">—</div><div class="kpi-sub" id="d16-pct">—% complete</div></div>
+    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d16-rem">—</div><div class="kpi-sub">pending upload</div></div>
+    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d16-top" style="font-size:20px;padding-top:4px">—</div><div class="kpi-sub" id="d16-top-n">— games</div></div>
   </div>
   <div class="row2">
     <div class="card"><div class="sec-title">Games by Event</div><div id="prog-may16"><div class="no-data">Loading...</div></div></div>
     <div class="card">
       <div class="sec-title">Upload Progress</div>
-      <div style="position:relative;height:155px"><canvas id="donut-may16"></canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may16-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span><span id="ld-may16-pend">—</span> pending</span></div>
+      <div style="position:relative;height:180px"><canvas id="donut-may16"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#16a34a"></span><span id="ld-may16-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#e5e7eb"></span><span id="ld-may16-pend">—</span> pending</span></div>
     </div>
   </div>
   <div class="card">
     <div class="sec-title">Top Crew — May 16</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div><div id="crew-grab-may16"><div class="no-data">No data yet</div></div></div>
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">CUT BY</div><div id="crew-cut-may16"><div class="no-data">No data yet</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:4px">
+      <div><div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">GRABBED BY</div><div id="crew-grab-may16"><div class="no-data">No data yet</div></div></div>
+      <div><div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">CUT BY</div><div id="crew-cut-may16"><div class="no-data">No data yet</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- MAY 17 -->
 <div id="may17" class="tab-panel">
-  <div class="kpi-grid" style="margin-bottom:.75rem">
+  <div class="kpi-grid" style="margin-bottom:1rem">
     <div class="kpi"><div class="kpi-label">📅 Total Games</div><div class="kpi-val" id="d17-total">—</div><div class="kpi-sub">May 17 · All events</div></div>
-    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d17-done" style="color:#3B6D11">—</div><div class="kpi-sub" id="d17-pct">—% complete</div></div>
-    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d17-rem" style="color:#993C1D">—</div><div class="kpi-sub">pending upload</div></div>
-    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d17-top" style="font-size:13px;padding-top:6px">—</div><div class="kpi-sub" id="d17-top-n">— games</div></div>
+    <div class="kpi"><div class="kpi-label">✅ Uploaded</div><div class="kpi-val" id="d17-done">—</div><div class="kpi-sub" id="d17-pct">—% complete</div></div>
+    <div class="kpi"><div class="kpi-label">⏳ Remaining</div><div class="kpi-val" id="d17-rem">—</div><div class="kpi-sub">pending upload</div></div>
+    <div class="kpi"><div class="kpi-label">🏆 Top Grabber</div><div class="kpi-val" id="d17-top" style="font-size:20px;padding-top:4px">—</div><div class="kpi-sub" id="d17-top-n">— games</div></div>
   </div>
   <div class="row2">
     <div class="card"><div class="sec-title">Games by Event</div><div id="prog-may17"><div class="no-data">Loading...</div></div></div>
     <div class="card">
       <div class="sec-title">Upload Progress</div>
-      <div style="position:relative;height:155px"><canvas id="donut-may17"></canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span><span id="ld-may17-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span><span id="ld-may17-pend">—</span> pending</span></div>
+      <div style="position:relative;height:180px"><canvas id="donut-may17"></canvas></div>
+      <div class="legend"><span><span class="leg-dot" style="background:#16a34a"></span><span id="ld-may17-done">—</span> uploaded</span><span><span class="leg-dot" style="background:#e5e7eb"></span><span id="ld-may17-pend">—</span> pending</span></div>
     </div>
   </div>
   <div class="card">
     <div class="sec-title">Top Crew — May 17</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div><div id="crew-grab-may17"><div class="no-data">No data yet</div></div></div>
-      <div><div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">CUT BY</div><div id="crew-cut-may17"><div class="no-data">No data yet</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:4px">
+      <div><div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">GRABBED BY</div><div id="crew-grab-may17"><div class="no-data">No data yet</div></div></div>
+      <div><div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">CUT BY</div><div id="crew-cut-may17"><div class="no-data">No data yet</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- OVERVIEW -->
 <div id="overview" class="tab-panel">
   <div class="row2">
     <div class="card">
       <div class="sec-title">Games by Event (All Days)</div>
-      <div style="position:relative;height:260px"><canvas id="chart-events"></canvas></div>
-      <div class="legend"><span><span class="leg-dot" style="background:#639922"></span>Uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span>Pending</span></div>
+      <div style="position:relative;height:300px"><canvas id="chart-events"></canvas></div>
+      <div class="legend" style="margin-top: 15px;"><span><span class="leg-dot" style="background:#16a34a"></span>Uploaded</span><span><span class="leg-dot" style="background:#e5e7eb"></span>Pending</span></div>
     </div>
     <div class="card">
       <div class="sec-title">All-Time Top Performers</div>
-      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:5px">GRABBED BY</div>
+      <div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px">GRABBED BY</div>
       <div id="crew-grab-all"><div class="no-data">Loading...</div></div>
-      <div style="font-size:10px;color:var(--color-text-secondary);margin:10px 0 5px">CUT BY</div>
+      <div style="font-size:11px;font-weight:600;color:var(--color-text-secondary);margin:20px 0 10px">CUT BY</div>
       <div id="crew-cut-all"><div class="no-data">Loading...</div></div>
     </div>
   </div>
   <div class="card" style="margin-top:0">
     <div class="sec-title">Progress by Date</div>
-    <div style="position:relative;height:170px"><canvas id="chart-dates"></canvas></div>
-    <div class="legend"><span><span class="leg-dot" style="background:#639922"></span>Uploaded</span><span><span class="leg-dot" style="background:#D3D1C7"></span>Pending</span></div>
+    <div style="position:relative;height:220px"><canvas id="chart-dates"></canvas></div>
+    <div class="legend" style="margin-top: 15px;"><span><span class="leg-dot" style="background:#16a34a"></span>Uploaded</span><span><span class="leg-dot" style="background:#e5e7eb"></span>Pending</span></div>
   </div>
 </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
+// Logic strictly retained
 const API_KEY = 'AIzaSyAK-bF8Y3R9dT_EfJAn8LIpiqktu4Ki5_8';
 const NIKE_ID = '1_PdcNf4s3lz_8PvveR5bbU8J7PNnfJg5O-lH1hTKC1M';
 const PUMA_ID = '1KK1iOfXFjWI5gVuHaloVNlMj_d7yBam4Osd4ixVhyV8';
 
-// Exact sheet configs derived from CSV analysis
-// Nike: standard header row 0. Puma: header is row index 1, data starts row 2
 const SHEETS = [
   { id: NIKE_ID, label: 'EYBL Boys Memphis',        headerRow: 0, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed by', cutCol:'Cutted by' },
   { id: NIKE_ID, label: 'EYBL Girls New Orleans',    headerRow: 0, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed by', cutCol:'Cutted by' },
@@ -189,7 +284,6 @@ const SHEETS = [
   { id: PUMA_ID, label: 'Puma Boys Tulsa',           headerRow: 1, dateCol:'Date', uploadCol:'Uploaded', grabCol:'Grabbed By', cutCol:'Cutted by' },
 ];
 
-// Map from sheet tab name to search terms for auto-discovery
 const NIKE_KEYWORDS = ['eybl boys', 'eybl girls', 'eycl girls', 'memphis', 'new orleans'];
 const PUMA_KEYWORDS = ['girls omaha', 'boys tulsa', 'puma', 'omaha', 'tulsa', 'may'];
 
@@ -223,7 +317,6 @@ function mkChart(id, type, data, opts){
 function parseDate(raw){
   if(!raw) return null;
   const s = raw.toString().trim().toLowerCase();
-  // Only match spelled-out month names to avoid false matches on IST date columns (e.g. "5/16/2026 2:30:00")
   if(s.includes('may 15')) return 'May 15';
   if(s.includes('may 16')) return 'May 16';
   if(s.includes('may 17')) return 'May 17';
@@ -236,12 +329,9 @@ function isUploaded(v){
   return s === 'TRUE' || s === 'YES' || s === '1';
 }
 
-// Parse raw values[][] from Sheets API
-// headerRow: which row index (0-based) has headers; data starts after
 function parseSheetValues(values, label, headerRowIdx){
   if(!values || values.length < 2) return [];
 
-  // Auto-detect real header row: scan first 6 rows for one that has exact 'Date' + 'Uploaded' columns
   let realHeaderIdx = -1;
   for(let i = 0; i < Math.min(6, values.length); i++){
     const row = (values[i]||[]).map(h => (h||'').toString().trim().toLowerCase());
@@ -258,7 +348,6 @@ function parseSheetValues(values, label, headerRowIdx){
 
   const headers = (values[realHeaderIdx]||[]).map(h => (h||'').toString().trim().toLowerCase());
 
-  // Find columns — use EXACT match for 'date' to avoid hitting 'ist date time'
   const find = (...terms) => headers.findIndex(h => terms.some(t => h.includes(t.toLowerCase())));
   const dateI   = headers.findIndex(h => h === 'date') >= 0 ? headers.findIndex(h => h === 'date') : find('date');
   const uploadI = headers.findIndex(h => h === 'uploaded') >= 0 ? headers.findIndex(h => h === 'uploaded') : find('uploaded');
@@ -302,10 +391,8 @@ async function fetchValues(spreadsheetId, sheetTitle){
   return j.values || [];
 }
 
-// Match a discovered tab name to one of our 5 expected labels
 function matchLabel(tabName){
   const n = tabName.toLowerCase();
-  // Puma-specific first (contain puma/tulsa/omaha)
   if(n.includes('puma') || n.includes('tulsa') || n.includes('omaha')) {
     if(n.includes('girls')) return { label:'Puma Girls Omaha', headerRow:1, id:PUMA_ID };
     if(n.includes('boys'))  return { label:'Puma Boys Tulsa',  headerRow:1, id:PUMA_ID };
@@ -360,8 +447,8 @@ function renderDonut(canvasId, doneId, pendId, done, pend){
   setText(pendId, pend);
   mkChart(canvasId, 'doughnut', {
     labels:['Uploaded','Pending'],
-    datasets:[{data:[done, pend], backgroundColor:['#639922','#D3D1C7'], borderWidth:0}]
-  },{cutout:'70%', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}`}}}});
+    datasets:[{data:[done, pend], backgroundColor:['#16a34a','#e5e7eb'], borderWidth:0}]
+  },{cutout:'75%', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}`}}}});
 }
 
 function renderCrew(containerId, entries){
@@ -395,7 +482,6 @@ function renderAll(allRows){
     setText('k-top-n', allGrab[0][1] + ' games grabbed');
   }
 
-  // Per-date tabs
   DATES.forEach(date => {
     const key = 'may' + date.split(' ')[1];
     const dayNum = date.split(' ')[1];
@@ -415,30 +501,29 @@ function renderAll(allRows){
     renderCrew(`crew-cut-${key}`,  countBy(dateRows.filter(r=>r.cutted_by), 'cutted_by'));
   });
 
-  // Overview charts
   const events = [...new Set(allRows.map(r=>r.event))];
   const evLabels = events.map(shortName);
   const evDone   = events.map(ev => allRows.filter(r=>r.event===ev&&r.uploaded).length);
   const evPend   = events.map(ev => allRows.filter(r=>r.event===ev&&!r.uploaded).length);
-  const TC = 'rgba(100,100,100,0.8)', GC = 'rgba(128,128,128,0.1)';
+  const TC = '#6b7280', GC = '#f3f4f6';
 
   mkChart('chart-events','bar',{
     labels: evLabels,
     datasets:[
-      {label:'Uploaded', data:evDone, backgroundColor:'#639922'},
-      {label:'Pending',  data:evPend, backgroundColor:'#D3D1C7'},
+      {label:'Uploaded', data:evDone, backgroundColor:'#16a34a', borderRadius: 4},
+      {label:'Pending',  data:evPend, backgroundColor:'#e5e7eb', borderRadius: 4},
     ]
-  },{scales:{x:{stacked:true,ticks:{color:TC,font:{size:10}},grid:{color:GC}},y:{stacked:true,ticks:{color:TC},grid:{color:GC}}}});
+  },{scales:{x:{stacked:true,ticks:{color:TC,font:{family:'Inter',size:11}},grid:{color:GC,display:false}},y:{stacked:true,ticks:{color:TC,font:{family:'Inter'}},grid:{color:GC}}}});
 
   const dateTotals = DATES.map(d => allRows.filter(r=>r.date===d).length);
   const dateDones  = DATES.map(d => allRows.filter(r=>r.date===d&&r.uploaded).length);
   mkChart('chart-dates','bar',{
     labels: DATES,
     datasets:[
-      {label:'Uploaded', data:dateDones, backgroundColor:'#639922'},
-      {label:'Pending',  data:dateTotals.map((t,i)=>t-dateDones[i]), backgroundColor:'#D3D1C7'},
+      {label:'Uploaded', data:dateDones, backgroundColor:'#16a34a', borderRadius: 4},
+      {label:'Pending',  data:dateTotals.map((t,i)=>t-dateDones[i]), backgroundColor:'#e5e7eb', borderRadius: 4},
     ]
-  },{scales:{x:{stacked:true,ticks:{color:TC},grid:{color:GC}},y:{stacked:true,ticks:{color:TC},grid:{color:GC}}}});
+  },{scales:{x:{stacked:true,ticks:{color:TC,font:{family:'Inter'}},grid:{color:GC,display:false}},y:{stacked:true,ticks:{color:TC,font:{family:'Inter'}},grid:{color:GC}}}});
 
   renderCrew('crew-grab-all', countBy(allRows.filter(r=>r.grabbed_by),'grabbed_by'));
   renderCrew('crew-cut-all',  countBy(allRows.filter(r=>r.cutted_by), 'cutted_by'));
@@ -446,7 +531,6 @@ function renderAll(allRows){
   setText('last-updated', 'Updated ' + new Date().toLocaleTimeString());
 }
 
-// ── Puma CSV (published Google Sheet) ────────────────────────────────────────
 const PUMA_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRKtj-E1vWISauDR37xk9MjnuVeg9HCTzdQma2X8VvEkkdarD9fZfIy0--HxUzWGQNeQQgnpat_zGi/pub';
 const PUMA_BOYS_CSV  = PUMA_BASE + '?gid=1158782297&single=true&output=csv';
 const PUMA_GIRLS_CSV = PUMA_BASE + '?gid=1688250325&single=true&output=csv';
@@ -486,7 +570,6 @@ function parsePumaCSV(text, eventLabel){
   let headerIdx = -1;
   let dateI=-1, uploadI=-1, grabI=-1, cutI=-1;
 
-  // Find header row (has both 'date' and 'uploaded')
   for(let i=0;i<Math.min(8,lines.length);i++){
     const cols = splitCSVLine(lines[i]).map(h=>h.toLowerCase().replace(/"/g,'').trim());
     if(cols.some(h=>h==='date') && cols.some(h=>h==='uploaded')){
@@ -516,7 +599,6 @@ function parsePumaCSV(text, eventLabel){
   console.log(eventLabel, 'CSV parsed:', rows.length, 'rows | by date:', JSON.stringify(byDate));
   return rows;
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 async function fetchAll(){
   const upEl = $('last-updated');
@@ -524,7 +606,6 @@ async function fetchAll(){
   setHTML('err-area','');
 
   try {
-    // Fetch Nike (Sheets API) + Puma Boys & Girls CSV in parallel
     const [nikeNames, pumaBoysText, pumaGirlsText] = await Promise.all([
       getSheetNames(NIKE_ID),
       fetchCSVWithProxy(PUMA_BOYS_CSV),
@@ -533,7 +614,6 @@ async function fetchAll(){
 
     console.log('Nike tabs:', nikeNames);
 
-    // Build Nike fetch tasks
     const tasks = [];
     nikeNames.forEach(name => {
       const match = matchLabel(name);
@@ -541,7 +621,6 @@ async function fetchAll(){
       if(match && match.id === NIKE_ID) tasks.push({spreadsheetId: NIKE_ID, tabName: name, label: match.label, headerRow: match.headerRow});
     });
 
-    // Fetch all Nike sheets
     const results = await Promise.allSettled(
       tasks.map(t => fetchValues(t.spreadsheetId, t.tabName).then(values => parseSheetValues(values, t.label, t.headerRow)))
     );
@@ -550,15 +629,12 @@ async function fetchAll(){
     if(errors.length) console.warn('Some Nike sheets failed:', errors);
 
     const nikeRows = results.flatMap(r => r.status==='fulfilled' ? r.value : []);
-
-    // Parse Puma Boys & Girls from CSV
     const pumaBoysRows  = parsePumaCSV(pumaBoysText,  'Puma Boys Tulsa');
     const pumaGirlsRows = parsePumaCSV(pumaGirlsText, 'Puma Girls Omaha');
 
     const allRows = [...nikeRows, ...pumaBoysRows, ...pumaGirlsRows];
     console.log('Total rows:', allRows.length, '| Events:', [...new Set(allRows.map(r=>r.event))]);
 
-    // Per-event per-date breakdown
     [...new Set(allRows.map(r=>r.event))].forEach(ev => {
       const evRows = allRows.filter(r=>r.event===ev);
       const bd={};
